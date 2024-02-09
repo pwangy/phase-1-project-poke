@@ -81,6 +81,10 @@ h1 {
 	vertical-align: top;
 }
 
+#profile > img {
+	height: 200px;
+}
+
 footer {
 	background-color: slateblue;
 }
