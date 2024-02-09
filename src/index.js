@@ -57,7 +57,7 @@ const handleClick = e => {
     console.log(e.target)
 }
 
-const handleDragStart = e => {
+const handleDragStart = e => {}
 
 
 // ! Start app logic on load
