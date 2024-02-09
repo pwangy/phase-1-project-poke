@@ -44,6 +44,10 @@ const displayAllPokemon = (pokeListObj) => {
     li.innerText = pokeListObj.name
     results.appendChild(li)
     li.addEventListener('click', e => handleClick(e))
+    //! make list items draggable and attach event listener
+    li.setAttribute('draggable', true);
+    li.setAttribute('poke-data', pokeListObj.name); // stores name
+    li.addEventListener('dragstart', handleDragStart)
 }
 
 
@@ -52,6 +56,8 @@ const displayAllPokemon = (pokeListObj) => {
 const handleClick = e => {
     console.log(e.target)
 }
+
+const handleDragStart = e => {
 
 
 // ! Start app logic on load
