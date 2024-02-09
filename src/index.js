@@ -3,6 +3,7 @@ const pokeAPI = 'https://pokeapi.co/api/v2/'
 const h1 = document.querySelector('h1')
 const selector = document.querySelector('#selector')
 const results = document.querySelector('#pokemon-list')
+const searchFormSubmit = document.querySelector("form");
 // const howTo = document.querySelector('#how-to')
 
 
@@ -36,7 +37,7 @@ const getPokemon = () => {
         .catch(err => console.error(err))
 }
 
-//Display 
+// Display Functions
 
 const displayAllPokemon = (pokeListObj) => {
     console.log(pokeListObj)
@@ -45,6 +46,15 @@ const displayAllPokemon = (pokeListObj) => {
     results.appendChild(li)
     li.addEventListener('click', e => handleClick(e))
 }
+
+
+// SEARCH FUNCTIONS
+
+// Event Listener
+
+
+
+
 
 
 // Event Handlers
