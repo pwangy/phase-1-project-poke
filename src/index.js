@@ -37,7 +37,6 @@ const getPokemon = () => {
 }
 
 //Display 
-
 const displayAllPokemon = (pokeListObj) => {
     console.log(pokeListObj)
     const li = document.createElement('li')
@@ -48,7 +47,6 @@ const displayAllPokemon = (pokeListObj) => {
 
 
 // Event Handlers
-
 const handleClick = e => {
     console.log(e.target)
 }
