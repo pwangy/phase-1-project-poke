@@ -64,8 +64,9 @@ const setupDragDrop = () => {
         member.addEventListener('drop', handleDrop);
     });
 }
-//! drag event handlers
+//! drag and drop event handlers
 const handleDragStart = e => {
+    e.dataTransfer.setData('text/plain', e.target.getAttribute('poke-data'));
 
 }
 
@@ -79,11 +80,14 @@ const handleDragEnter = e => {
 
 const handleDrop = e => {
     e.preventDefault(); 
+    const pokeNameDrag = e.dataTransfer.getData('text/plain');
+    e.target.innerText = pokeNameDrag; // sets the inner text of the target to the pokemonName
 };
 
 // ! Start app logic on load
 const loadStuff = () => {
     getPokemon()
+    setupDragDrop()
 }
 
 loadStuff()
