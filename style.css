@@ -16,9 +16,9 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup, 
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-	margin: 0;
+	margin: 16px;
 	padding: 0;
-	border: 0;
+	border: 1px solid #666;
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
@@ -30,6 +30,8 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	background-color: #333;
+	color:antiquewhite;
 }
 ol, ul {
 	list-style: none;
@@ -45,4 +47,8 @@ q:before, q:after {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+}
+
+h1 {
+	background-color: hotpink;
 }
