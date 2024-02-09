@@ -30,7 +30,7 @@ const getPokemon = () => {
             throw res.statusText
         })  
         .then(allPokeList => {
-            allPokeList.results.forEach(result => displayAllPokemon(allPokeList.results))
+            allPokeList.results.forEach(result => displayAllPokemon(result))
         //    {debugger}
         })
         .catch(err => console.error(err))
@@ -39,15 +39,19 @@ const getPokemon = () => {
 //Display 
 
 const displayAllPokemon = (pokeListObj) => {
+    console.log(pokeListObj)
     const li = document.createElement('li')
     li.innerText = pokeListObj.name
     results.appendChild(li)
-
+    li.addEventListener('click', e => handleClick(e))
 }
 
 
+// Event Handlers
 
-
+const handleClick = e => {
+    console.log(e.target)
+}
 
 
 // ! Start app logic on load
