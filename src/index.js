@@ -55,7 +55,15 @@ const displayAllPokemon = (pokeListObj) => {
 const handleClick = e => {
     console.log(e.target)
 }
-// sj stuff 
+//Drag and Drop stuff
+
+const setupDragDrop = () => {
+    document.querySelectorAll('.members').forEach(member => {
+        member.addEventListener('dragover', handleDragOver);
+        member.addEventListener('dragenter', handleDragEnter);
+        member.addEventListener('drop', handleDrop);
+    });
+}
 //! drag event handlers
 const handleDragStart = e => {
 
