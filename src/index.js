@@ -3,6 +3,7 @@ const pokeAPI = 'https://pokeapi.co/api/v2/'
 const h1 = document.querySelector('h1')
 const selector = document.querySelector('#selector')
 const results = document.querySelector('#pokemon-list')
+const profile = document.querySelector('#profile')
 // const howTo = document.querySelector('#how-to')
 
 
@@ -37,7 +38,6 @@ const getPokemon = () => {
 }
 
 //Display 
-
 const displayAllPokemon = (pokeListObj) => {
     console.log(pokeListObj)
     const li = document.createElement('li')
@@ -48,7 +48,6 @@ const displayAllPokemon = (pokeListObj) => {
 
 
 // Event Handlers
-
 const handleClick = e => {
     console.log(e.target)
 }
