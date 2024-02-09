@@ -2,13 +2,12 @@
 const pokeAPI = 'https://pokeapi.co/api/v2/'
 const h1 = document.querySelector('h1')
 const selector = document.querySelector('#selector')
-const results = document.querySelector('#pokemon-list')
+const resultsList = document.querySelector('#pokemon-list')
 const profile = document.querySelector('#profile')
 // const howTo = document.querySelector('#how-to')
 
 
-const teamArray = []
-
+const teamArray = [null, null, null, null, null, null]
 
 // ! Ref for filtering
 // search field /pokemon
@@ -31,7 +30,7 @@ const getPokemon = () => {
             throw res.statusText
         })  
         .then(allPokeList => {
-            allPokeList.results.forEach(result => displayAllPokemon(result))
+            allPokeList.results.forEach(pokemon => displayAllPokemon(pokemon))
         //    {debugger}
         })
         .catch(err => console.error(err))
@@ -42,7 +41,7 @@ const displayAllPokemon = (pokeListObj) => {
     console.log(pokeListObj)
     const li = document.createElement('li')
     li.innerText = pokeListObj.name
-    results.appendChild(li)
+    resultsList.appendChild(li)
     li.addEventListener('click', e => handleClick(e))
     //! make list items draggable and attach event listener
     li.setAttribute('draggable', true);
@@ -64,11 +63,17 @@ const setupDragDrop = () => {
         member.addEventListener('drop', handleDrop);
     });
 }
+//update team ui
+const updateTeamUI = () => {
+    document.querySelectorAll('.members').forEach((member, index) => {
+        member.innerText = teamArray[index] ? teamArray[index] : '';
+    });
+}
 //! drag and drop event handlers
 const handleDragStart = e => {
     e.dataTransfer.setData('text/plain', e.target.getAttribute('poke-data'));
 
-}
+};
 
 const handleDragOver = e => {
     e.preventDefault();
@@ -82,6 +87,14 @@ const handleDrop = e => {
     e.preventDefault(); 
     const pokeNameDrag = e.dataTransfer.getData('text/plain');
     e.target.innerText = pokeNameDrag; // sets the inner text of the target to the pokemonName
+    const slotIndex = parseInt(e.target.getAttribute('data-index'), 10);
+
+    if (slotIndex >= 0 && slotIndex < teamArray.length) {
+        teamArray[slotIndex] = pokeNameDrag;
+        updateTeamUI();
+    } else {
+        console.error("Invalid slot");
+    }
 };
 
 // ! Start app logic on load
