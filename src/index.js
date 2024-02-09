@@ -2,7 +2,7 @@
 const pokeAPI = 'https://pokeapi.co/api/v2/'
 const h1 = document.querySelector('h1')
 const selector = document.querySelector('#selector')
-const results = document.querySelector('#pokemon-list')
+const resultsList = document.querySelector('#pokemon-list')
 const searchFormSubmit = document.querySelector("form");
 // const howTo = document.querySelector('#how-to')
 
@@ -31,33 +31,68 @@ const getPokemon = () => {
             throw res.statusText
         })  
         .then(allPokeList => {
-            allPokeList.results.forEach(result => displayAllPokemon(result))
+            console.log(allPokeList)
+            allPokeList.results.forEach(pokemon => displayAllPokemon(pokemon))
         //    {debugger}
         })
         .catch(err => console.error(err))
 }
 
-// Display Functions
 
+
+// DISPLAY FUNCTIONS
+
+// Display All Pokemon in Results List
 const displayAllPokemon = (pokeListObj) => {
-    console.log(pokeListObj)
     const li = document.createElement('li')
     li.innerText = pokeListObj.name
-    results.appendChild(li)
+    resultsList.appendChild(li)
     li.addEventListener('click', e => handleClick(e))
 }
 
 
-// SEARCH FUNCTIONS
+// <!---- SEARCH FUNCTIONALITY ---->
 
-// Event Listener
+// Search Event Listener
+
+searchFormSubmit.addEventListener('submit', e => {
+    e.preventDefault()
+    searchByName(e.target.search.value)
+})
+
+// Search Input Function
+
+const searchByName = (searchName) => {
+    resultsList.innerHTML = ""
+    getPokemon().then(allPokeList => {
+        allPokeList.results.forEach(pokemon => {
+            // const lowercaseName = searchName.toLowerCase()
+            // if (pokemon.name.toLowerCase().startsWith(lowercaseName)) {
+            //     renderSearchedName(pokemon)
+                if (pokemon.name.startsWith(searchName)) {
+                    renderSearchedName(pokemon.name)   
+            }
+            
+        })
+    })
+
+}
+
+// Searched Name Display Function
+
+const renderSearchedName = (searchName) => {
+    const searchResult = document.createElement("li")
+    li.innerText = searchName.name 
+    resultsList.append(searchResult)
+}
+
+// Append Multiple List Items to Search Results
 
 
 
 
 
-
-// Event Handlers
+// <!---- EVENT HANDLERS ---->
 
 const handleClick = e => {
     console.log(e.target)
