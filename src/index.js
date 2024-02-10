@@ -38,6 +38,19 @@ const getPokemon = () => {
         .catch(err => console.error(err))
 }
 
+const getPokemons = () => {
+    return fetch(`${pokeAPI}pokemon`) 
+        .then(res => {
+            if (res.ok) {
+                return res.json()
+            }
+            throw res.statusText
+        })  
+        .then(allPokeList => allPokeList.results)
+        //     // allPokeList.results.forEach(pokemon => displayAllPokemon(pokemon))
+        // })
+        .catch(err => console.error(err))    
+}
 
 
 // DISPLAY FUNCTIONS
@@ -60,12 +73,14 @@ searchFormSubmit.addEventListener('submit', e => {
     searchByName(e.target.search.value)
 })
 
+
+
 // Search Input Function
 
 const searchByName = (searchName) => {
     resultsList.innerHTML = ""
-    getPokemon().then(allPokeList => {
-        allPokeList.results.forEach(pokemon => {
+    getPokemons().then(allPokeList => {
+        allPokeList.forEach(pokemon => {
             // const lowercaseName = searchName.toLowerCase()
             // if (pokemon.name.toLowerCase().startsWith(lowercaseName)) {
             //     renderSearchedName(pokemon)
@@ -82,7 +97,7 @@ const searchByName = (searchName) => {
 
 const renderSearchedName = (searchName) => {
     const searchResult = document.createElement("li")
-    li.innerText = searchName.name 
+    searchResult.innerText = searchName
     resultsList.append(searchResult)
 }
 
