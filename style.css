@@ -52,3 +52,5 @@ table {
 h1 {
 	background-color: hotpink;
 }
+
+.is-hidden { display: none; }

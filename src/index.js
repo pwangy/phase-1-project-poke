@@ -3,8 +3,11 @@ const pokeAPI = 'https://pokeapi.co/api/v2/'
 const h1 = document.querySelector('h1')
 const selector = document.querySelector('#selector')
 const resultsList = document.querySelector('#pokemon-list')
+const resultsListItems = document.querySelector('.search-results')
 const searchFormSubmit = document.querySelector("form");
 // const howTo = document.querySelector('#how-to')
+
+
 
 
 const teamArray = []
@@ -30,64 +33,76 @@ const getPokemon = () => {
             }
             throw res.statusText
         })  
-        .then(allPokeList => {
-            console.log(allPokeList)
-            allPokeList.results.forEach(pokemon => displayAllPokemon(pokemon))
-        //    {debugger}
-        })
-        .catch(err => console.error(err))
+        .then(allPokeList => {displayAllPokemon(allPokeList.results)})
+        //     // allPokeList.results.forEach(pokemon => displayAllPokemon(pokemon))
+        // })
+        .catch(err => console.error(err))    
 }
 
 
+
+//// <!---- SEARCH FUNCTIONALITY TRY #2  ---->
 
 // DISPLAY FUNCTIONS
 
-// Display All Pokemon in Results List
-const displayAllPokemon = (pokeListObj) => {
-    const li = document.createElement('li')
-    li.innerText = pokeListObj.name
-    resultsList.appendChild(li)
-    li.addEventListener('click', e => handleClick(e))
+// Displays a List Item for a Pokemon in the Results Area
+
+const displayAllPokemon = (allPokeList) => {
+    const htmlString = Array.from(allPokeList).map((pokemon) => {
+        return `
+        <li class="search-results">${pokemon.name}</li>
+        `
+    })
+    .join("");
+resultsList.innerHTML = htmlString;
 }
 
 
-// <!---- SEARCH FUNCTIONALITY ---->
+
+// const displayAllPokemon = (allPokeList) => {
+//     const li = document.createElement('li')
+//     li.innerText = pokemon.name
+//     li.className = "search-results"
+//     resultsList.appendChild(li)
+//     li.addEventListener('click', e => handleClick(e))
+// }
+
+//// <!---- SEARCH FUNCTIONALITY TRY #2  ---->
 
 // Search Event Listener
 
 searchFormSubmit.addEventListener('submit', e => {
     e.preventDefault()
-    searchByName(e.target.search.value)
+    const searchValue = e.target.search.value;
+    const filteredPokemon = resultsListArray.filter(pokemon => {
+       return pokemon.name.includes(searchValue)
+    })
+    console.log(filteredPokemon)
 })
 
-// Search Input Function
 
-const searchByName = (searchName) => {
-    resultsList.innerHTML = ""
-    getPokemon().then(allPokeList => {
-        allPokeList.results.forEach(pokemon => {
-            // const lowercaseName = searchName.toLowerCase()
-            // if (pokemon.name.toLowerCase().startsWith(lowercaseName)) {
-            //     renderSearchedName(pokemon)
-                if (pokemon.name.startsWith(searchName)) {
-                    renderSearchedName(pokemon.name)   
-            }
-            
-        })
-    })
 
-}
 
-// Searched Name Display Function
 
-const renderSearchedName = (searchName) => {
-    const searchResult = document.createElement("li")
-    li.innerText = searchName.name 
-    resultsList.append(searchResult)
-}
+// Create Array
 
-// Append Multiple List Items to Search Results
+// let resultsListArray = [];
 
+
+
+
+// // For Loop through List Items for Searched Name
+
+// const searchByName = (searchValue) => {
+//     for (i = 0; i < resultsListItems.length; i++) {
+//         if resultsListItems[i].innerText.toLowerCase()
+//             .includes(searchValue.toLowerCase()) {
+//         resultsListItems[i].classList.remove("is-hidden");
+//         } else {
+//             resultsListItems[i].classList.add("is-hidden");
+//         }
+//     }
+// }
 
 
 
@@ -105,3 +120,48 @@ const loadStuff = () => {
 }
 
 loadStuff()
+
+
+
+// // <!---- SEARCH FUNCTIONALITY TRY #1  ---->
+
+// // Search Event Listener
+
+// searchFormSubmit.addEventListener('submit', e => {
+//     e.preventDefault()
+//     searchByName(e.target.search.value)
+// })
+
+// // Search Input Function
+
+// const searchByName = (searchValue) => {
+//     resultsList.innerHTML = ""
+//     getPokemon().then(allPokeList => {
+//        console.log(allPokeList)
+//         // allPokeList.results.forEach(pokemon => {
+//         //     console.log(pokemon)
+//         //         if (pokemon.name.startsWith(searchValue)) {
+//         //             renderSearchedName(pokemon)   
+
+//                         // const lowercaseName = searchName.toLowerCase()
+//             // if (pokemon.name.toLowerCase().startsWith(lowercaseName)) {
+//             //     renderSearchedName(pokemon)
+                   
+//         })
+         
+//         }
+    
+
+
+
+// // Searched Name Display Function
+
+// const renderSearchedName = (pokemonName) => {
+//     // console.log(pokemonName)
+//     const searchResult = document.createElement("li")
+//     li.innerText = pokemonName.name 
+//     resultsList.append(searchResult)
+// }
+
+// // Append Multiple List Items to Search Results
+
