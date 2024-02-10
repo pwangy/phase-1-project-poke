@@ -64,6 +64,7 @@ const displayAllPokemon = (pokeListObj) => {
 
 // Event Handlers
 
+
 //Drag and Drop stuff
 
 const setupDragDrop = () => {
@@ -131,6 +132,10 @@ const displayProfile = (pokeInfoObj) => {
 
     profileWrapper.append(img, name)
     profile.append(profileWrapper)
+
+    //! Make profileWrapper draggable
+    profileWrapper.setAttribute('draggable', true);
+    profileWrapper.addEventListener('dragstart', handleDragStart);
     // ability, attacks
     // stage?
     // type
