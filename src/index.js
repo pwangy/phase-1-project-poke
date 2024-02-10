@@ -52,13 +52,14 @@ const getSpecificPoke = (currentPoke) => {
 const displayAllPokemon = (pokeListObj) => {
     const li = document.createElement('li')
     li.innerText = pokeListObj.name
-    //! make list items draggable and attach event listener
-    li.setAttribute('draggable', true);
-    li.setAttribute('poke-data', pokeListObj.name); // stores name
-    li.addEventListener('dragstart', handleDragStart)
     li.id = pokeListObj.url
     resultsList.appendChild(li)
     li.addEventListener('click', e => handleClick(e, pokeListObj))
+    //! make list items draggable and attach event listener
+    li.setAttribute('draggable', true);
+    li.setAttribute('poke-data', pokeListObj.name); // stores name
+    li.setAttribute('img-src', imageUrl); //store imageUrl
+    li.addEventListener('dragstart', handleDragStart)
 }
 
 // Event Handlers
@@ -84,11 +85,10 @@ const handleDragStart = e => {
     let data;
     // check if dragging list
     if (e.target.getAttribute('poke-data')) {
-        // For list items, use the 'poke-data' attribute which stores the Pokémon's name
-        data = e.target.getAttribute('poke-data');
+        data = e.target.getAttribute('poke-data'); //set data to poke-data
+    // check if dragging wrapper
     } else if (e.target === profileWrapper) {
-        // If the drag started from the profileWrapper, use the Pokémon's name
-        data = profileWrapper.getAttribute('data-pokename'); // Ensure this attribute is set when displaying the profile
+        data = profileWrapper.getAttribute('data-pokename'); // set data to data-pokename
     }
     e.dataTransfer.setData('text/plain', data);
 };
