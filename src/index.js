@@ -8,7 +8,7 @@ const profileWrapper = document.createElement('article')
 const img = document.createElement('img')
 const name = document.createElement('h3')
 
-const teamArray = []
+const teamArray = [null, null, null, null, null, null]
 let currentPoke = ''
 
 // ! Ref for filtering
@@ -31,7 +31,6 @@ const getPokemon = () => {
         //    {debugger}
         })
         .catch(err => console.error(err))
-            allPokeList.results.forEach(pokemon => displayAllPokemon(pokemon))
 }
 
 const getSpecificPoke = (currentPoke) => {
@@ -82,8 +81,16 @@ const updateTeamUI = () => {
 }
 //! drag and drop event handlers
 const handleDragStart = e => {
-    e.dataTransfer.setData('text/plain', e.target.getAttribute('poke-data'));
-
+    let data;
+    // check if dragging list
+    if (e.target.getAttribute('poke-data')) {
+        // For list items, use the 'poke-data' attribute which stores the Pokémon's name
+        data = e.target.getAttribute('poke-data');
+    } else if (e.target === profileWrapper) {
+        // If the drag started from the profileWrapper, use the Pokémon's name
+        data = profileWrapper.getAttribute('data-pokename'); // Ensure this attribute is set when displaying the profile
+    }
+    e.dataTransfer.setData('text/plain', data);
 };
 
 const handleDragOver = e => {
@@ -97,7 +104,6 @@ const handleDragEnter = e => {
 const handleDrop = e => {
     e.preventDefault(); 
     const pokeNameDrag = e.dataTransfer.getData('text/plain');
-    e.target.innerText = pokeNameDrag; // sets the inner text of the target to the pokemonName
     const slotIndex = parseInt(e.target.getAttribute('data-index'), 10);
 
     if (slotIndex >= 0 && slotIndex < teamArray.length) {
@@ -125,6 +131,7 @@ const displayProfile = (pokeInfoObj) => {
     console.log(pokeInfoObj) // print array of poke info
     
     profileWrapper.id = 'profile-wrapper'
+    //might need to change
     profileWrapper.name = pokeInfoObj.id
     img.src = pokeInfoObj.sprites.other.dream_world.front_default
     img.alt = pokeInfoObj.name
@@ -134,6 +141,7 @@ const displayProfile = (pokeInfoObj) => {
     profile.append(profileWrapper)
 
     //! Make profileWrapper draggable
+    profileWrapper.setAttribute('data-pokename', pokeInfoObj.name);
     profileWrapper.setAttribute('draggable', true);
     profileWrapper.addEventListener('dragstart', handleDragStart);
     // ability, attacks
