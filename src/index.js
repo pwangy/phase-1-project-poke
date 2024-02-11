@@ -4,7 +4,7 @@ const pokeAPI = 'https://pokeapi.co/api/v2/'
 const h1 = document.querySelector('h1')
 const selector = document.querySelector('#selector')
 const resultsList = document.querySelector('#pokemon-list')
-const searchFormSubmit = document.querySelector("form");
+const searchFormSubmit = document.querySelector("form")
 
 const profile = document.querySelector('#profile')
 const profileWrapper = document.createElement('article')
@@ -39,7 +39,7 @@ let currentPoke = ''
 
 // ! Fetch Data
 const getPokemon = () => {
-    return fetch(`${pokeAPI}pokemon`) 
+    return fetch(`${pokeAPI}pokemon`)
         .then(res => {
             if (res.ok) {
                 return res.json()
@@ -54,7 +54,7 @@ const getPokemon = () => {
 }
 
 const getPokemons = () => {
-    return fetch(`${pokeAPI}pokemon`) 
+    return fetch(`${pokeAPI}pokemon`)
         .then(res => {
             if (res.ok) {
                 return res.json()
@@ -62,21 +62,24 @@ const getPokemons = () => {
             throw res.statusText
         })  
         .then(allPokeList => allPokeList.results)
-        .catch(err => console.error(err))    
+        .catch(err => console.error(err))
 }
 
 // DISPLAY FUNCTIONS
-
-// Display All Pokemon in Results List
 const displayAllPokemon = (pokeListObj) => {
     const li = document.createElement('li')
     li.innerText = pokeListObj.name
+    li.id = pokeListObj.url
     resultsList.appendChild(li)
-    li.addEventListener('click', e => handleClick(e))
+    li.addEventListener('click', e => handleClick(e, pokeListObj))
+    //! make list items draggable and attach event listener
+    li.setAttribute('draggable', true);
+    li.setAttribute('poke-data', pokeListObj.name); // stores name
+    //li.setAttribute('img-src', imageUrl); //!might use this to store imageUrl?
+    li.addEventListener('dragstart', handleDragStart)
 }
 
 // <!---- SEARCH FUNCTIONALITY ---->
-
 // Search Event Listener
 searchFormSubmit.addEventListener('submit', e => {
     e.preventDefault()
@@ -108,7 +111,6 @@ const renderSearchedName = (searchName) => {
 }
 
 // <!---- EVENT HANDLERS ---->
-
 const getSpecificPoke = (currentPoke) => {
     // console.log(currentPoke)
         fetch(currentPoke)
@@ -124,22 +126,7 @@ const getSpecificPoke = (currentPoke) => {
             .catch(err => console.error(err))
 }
 
-//Display 
-const displayAllPokemon = (pokeListObj) => {
-    const li = document.createElement('li')
-    li.innerText = pokeListObj.name
-    li.id = pokeListObj.url
-    resultsList.appendChild(li)
-    li.addEventListener('click', e => handleClick(e, pokeListObj))
-    //! make list items draggable and attach event listener
-    li.setAttribute('draggable', true);
-    li.setAttribute('poke-data', pokeListObj.name); // stores name
-    //li.setAttribute('img-src', imageUrl); //!might use this to store imageUrl?
-    li.addEventListener('dragstart', handleDragStart)
-}
-
-//Drag and Drop stuff
-
+// Drag and Drop stuff
 const setupDragDrop = () => {
     document.querySelectorAll('.members').forEach(member => {
         member.addEventListener('dragover', handleDragOver);
@@ -206,7 +193,6 @@ const displayProfile = (pokeInfoObj) => {
     profileWrapper.id = 'profile-wrapper' // for styling
 
     // set image, name, pokedex number
-
     img.src = pokeInfoObj.sprites.other.dream_world.front_default
     img.alt = pokeInfoObj.name //to uppercase
     name.innerText = pokeInfoObj.name
@@ -235,11 +221,10 @@ const displayProfile = (pokeInfoObj) => {
 
     // nest and show
     stats.append(abilityRow, heightRow, weightRow) 
-    profileWrapper.append(img, name, id, stats)
-    //! Make profileWrapper draggable
     profileWrapper.setAttribute('poke-data', pokeInfoObj.name);
     profileWrapper.setAttribute('draggable', true);
     profileWrapper.addEventListener('dragstart', handleDragStart);
+    profileWrapper.append(img, name, id, stats)
     profile.append(profileWrapper)
   
     // fetch species info growth-rate,
