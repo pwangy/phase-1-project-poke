@@ -58,7 +58,7 @@ const displayAllPokemon = (pokeListObj) => {
     //! make list items draggable and attach event listener
     li.setAttribute('draggable', true);
     li.setAttribute('poke-data', pokeListObj.name); // stores name
-    li.setAttribute('img-src', imageUrl); //store imageUrl
+    //li.setAttribute('img-src', imageUrl); //!might use this to store imageUrl
     li.addEventListener('dragstart', handleDragStart)
 }
 
@@ -83,13 +83,13 @@ const updateTeamUI = () => {
 //! drag and drop event handlers
 const handleDragStart = e => {
     let data;
-    // check if dragging list
-    if (e.target.getAttribute('poke-data')) {
+    // check if dragging list //! changed so both list and wrapper use setAttribute('pokedata'
+    // if (e.target.getAttribute('poke-data')) {
         data = e.target.getAttribute('poke-data'); //set data to poke-data
-    // check if dragging wrapper
-    } else if (e.target === profileWrapper) {
-        data = profileWrapper.getAttribute('data-pokename'); // set data to data-pokename
-    }
+    // // check if dragging wrapper
+    // } else if (e.target === profileWrapper) {
+    //     data = profileWrapper.getAttribute('data-pokename'); // set data to data-pokename
+    // }
     e.dataTransfer.setData('text/plain', data);
 };
 
@@ -141,7 +141,7 @@ const displayProfile = (pokeInfoObj) => {
     profile.append(profileWrapper)
 
     //! Make profileWrapper draggable
-    profileWrapper.setAttribute('data-pokename', pokeInfoObj.name);
+    profileWrapper.setAttribute('poke-data', pokeInfoObj.name);
     profileWrapper.setAttribute('draggable', true);
     profileWrapper.addEventListener('dragstart', handleDragStart);
     // ability, attacks
