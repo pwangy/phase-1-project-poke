@@ -109,7 +109,6 @@ const searchByName = (searchName) => {
     const handleClick = (e, pokeListObj) => {
         reset()
         currentPoke = e.target.id //sets specific pokemon's url
-        console.log(`setting current poke to ${currentPoke}`)
         return getSpecificPoke(currentPoke)
     }
 
@@ -246,9 +245,7 @@ const displaySpeciesDetail = (speciesObj) => {
     // get flavor text, remove line breaks, set text
     flavor = speciesObj.flavor_text_entries[1].flavor_text
     const removeLineBreaks = flavor.split('\n')
-    console.log(removeLineBreaks)
     const flavorClean = removeLineBreaks.join(' ')
-    console.log(flavorClean)
     flavorText.innerText = flavorClean
     flavorText.id = 'flavor-text'
 
