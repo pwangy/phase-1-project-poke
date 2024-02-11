@@ -181,7 +181,6 @@ const reset = () => {
     abilityRow.remove()
     growthRow.remove()
     abilityArray = []
-    console.log(`current poke has been reset ${currentPoke}`)
 }
 
 const getSpecificPoke = (currentPoke) => {
@@ -258,9 +257,11 @@ const getSpecies = (species) => {
 
 const displaySpeciesDetail = (speciesObj) => {
     flavor = speciesObj.flavor_text_entries[1].flavor_text
-    flavorText.innerText = flavor
-    console.log(flavorText)
-    // flavorText.innerText = flavorText
+    const removeLineBreaks = flavor.split('\n')
+    console.log(removeLineBreaks)
+    const flavorClean = removeLineBreaks.join(' ')
+    console.log(flavorClean)
+    flavorText.innerText = flavorClean
     flavorText.id = 'flavor-text'
     // flavorWrapper.append(flavorText)
 
