@@ -4,6 +4,8 @@ const pokeAPI = 'https://pokeapi.co/api/v2/'
 const h1 = document.querySelector('h1')
 const selector = document.querySelector('#selector')
 const resultsList = document.querySelector('#pokemon-list')
+const searchFormSubmit = document.querySelector("form");
+
 const profile = document.querySelector('#profile')
 const profileWrapper = document.createElement('article')
 
@@ -51,6 +53,62 @@ const getPokemon = () => {
         .catch(err => console.error(err))
 }
 
+const getPokemons = () => {
+    return fetch(`${pokeAPI}pokemon`) 
+        .then(res => {
+            if (res.ok) {
+                return res.json()
+            }
+            throw res.statusText
+        })  
+        .then(allPokeList => allPokeList.results)
+        .catch(err => console.error(err))    
+}
+
+// DISPLAY FUNCTIONS
+
+// Display All Pokemon in Results List
+const displayAllPokemon = (pokeListObj) => {
+    const li = document.createElement('li')
+    li.innerText = pokeListObj.name
+    resultsList.appendChild(li)
+    li.addEventListener('click', e => handleClick(e))
+}
+
+// <!---- SEARCH FUNCTIONALITY ---->
+
+// Search Event Listener
+searchFormSubmit.addEventListener('submit', e => {
+    e.preventDefault()
+    searchByName(e.target.search.value)
+})
+
+// Search Input Function
+const searchByName = (searchName) => {
+    resultsList.innerHTML = ""
+    getPokemons().then(allPokeList => {
+        allPokeList.forEach(pokemon => {
+            // const lowercaseName = searchName.toLowerCase()
+            // if (pokemon.name.toLowerCase().startsWith(lowercaseName)) {
+            //     renderSearchedName(pokemon)
+                if (pokemon.name.startsWith(searchName)) {
+                    renderSearchedName(pokemon.name)   
+            }
+            
+        })
+    })
+
+}
+
+// Searched Name Display Function
+const renderSearchedName = (searchName) => {
+    const searchResult = document.createElement("li")
+    searchResult.innerText = searchName
+    resultsList.append(searchResult)
+}
+
+// <!---- EVENT HANDLERS ---->
+
 const getSpecificPoke = (currentPoke) => {
     // console.log(currentPoke)
         fetch(currentPoke)
@@ -79,9 +137,6 @@ const displayAllPokemon = (pokeListObj) => {
     //li.setAttribute('img-src', imageUrl); //!might use this to store imageUrl?
     li.addEventListener('dragstart', handleDragStart)
 }
-
-// Event Handlers
-
 
 //Drag and Drop stuff
 
