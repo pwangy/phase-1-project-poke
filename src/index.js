@@ -4,7 +4,6 @@ const pokeAPI = 'https://pokeapi.co/api/v2/'
 const h1 = document.querySelector('h1')
 const selector = document.querySelector('#selector')
 const resultsList = document.querySelector('#pokemon-list')
-
 const profile = document.querySelector('#profile')
 const profileWrapper = document.createElement('article')
 
@@ -27,7 +26,7 @@ const weightRow = document.createElement('tr')
 const weightLabel = document.createElement('td')
 const weightValue = document.createElement('td')
 
-const teamArray = []
+const teamArray = [null, null, null, null, null, null]
 let currentPoke = ''
 
 // ! Ref for filtering
@@ -47,6 +46,7 @@ const getPokemon = () => {
         })  
         .then(allPokeList => {
             allPokeList.results.forEach(pokemon => displayAllPokemon(pokemon))
+        //    {debugger}
         })
         .catch(err => console.error(err))
 }
@@ -73,9 +73,59 @@ const displayAllPokemon = (pokeListObj) => {
     li.id = pokeListObj.url
     resultsList.appendChild(li)
     li.addEventListener('click', e => handleClick(e, pokeListObj))
+    //! make list items draggable and attach event listener
+    li.setAttribute('draggable', true);
+    li.setAttribute('poke-data', pokeListObj.name); // stores name
+    //li.setAttribute('img-src', imageUrl); //!might use this to store imageUrl?
+    li.addEventListener('dragstart', handleDragStart)
 }
 
 // Event Handlers
+
+
+//Drag and Drop stuff
+
+const setupDragDrop = () => {
+    document.querySelectorAll('.members').forEach(member => {
+        member.addEventListener('dragover', handleDragOver);
+        member.addEventListener('dragenter', handleDragEnter);
+        member.addEventListener('drop', handleDrop);
+    });
+}
+//update team ui
+const updateTeamUI = () => {
+    document.querySelectorAll('.members').forEach((member, index) => {
+        member.innerText = teamArray[index] ? teamArray[index] : '';
+    });
+}
+//! drag and drop event handlers
+const handleDragStart = e => {
+    let data;
+    //! changed so both list and wrapper use setAttribute('pokedata'
+    data = e.target.getAttribute('poke-data'); //store data
+    e.dataTransfer.setData('text/plain', data);
+};
+
+const handleDragOver = e => {
+    e.preventDefault();
+};
+
+const handleDragEnter = e => {
+    e.preventDefault(); 
+};
+
+const handleDrop = e => {
+    e.preventDefault(); 
+    const pokeNameDrag = e.dataTransfer.getData('text/plain');
+    const slotIndex = parseInt(e.target.getAttribute('data-index'), 10);
+
+    if (slotIndex >= 0 && slotIndex < teamArray.length) {
+        teamArray[slotIndex] = pokeNameDrag;
+        updateTeamUI();
+    } else {
+        console.error("Invalid slot");
+    }
+};
 const reset = () => {
     currentPoke = ''
     profileWrapper.remove()
@@ -101,6 +151,7 @@ const displayProfile = (pokeInfoObj) => {
     profileWrapper.id = 'profile-wrapper' // for styling
 
     // set image, name, pokedex number
+
     img.src = pokeInfoObj.sprites.other.dream_world.front_default
     img.alt = pokeInfoObj.name //to uppercase
     name.innerText = pokeInfoObj.name
@@ -130,8 +181,12 @@ const displayProfile = (pokeInfoObj) => {
     // nest and show
     stats.append(abilityRow, heightRow, weightRow) 
     profileWrapper.append(img, name, id, stats)
+    //! Make profileWrapper draggable
+    profileWrapper.setAttribute('poke-data', pokeInfoObj.name);
+    profileWrapper.setAttribute('draggable', true);
+    profileWrapper.addEventListener('dragstart', handleDragStart);
     profile.append(profileWrapper)
-
+  
     // fetch species info growth-rate,
     let species = ''
     species = pokeInfoObj.species.url
@@ -177,6 +232,7 @@ const displaySpeciesDetail = (speciesObj) => {
 // ! Start app logic on load
 const loadStuff = () => {
     getPokemon()
+    setupDragDrop()
 }
 
 loadStuff()
