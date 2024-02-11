@@ -159,7 +159,6 @@ const searchByName = (searchName) => {
 //! Display pokemon profile
 // Reset and clear profile before loading another
 const reset = () => {
-    // currentPoke = ''
     profileWrapper.remove()
     img.remove()
     name.remove()
@@ -175,17 +174,17 @@ const reset = () => {
 }
 
 const getSpecificPoke = (currentPoke) => {
-        fetch(currentPoke)
-            .then(res => {
-                if (res.ok) {
-                    return res.json()
-                }
-                throw res.statusText
-            })  
-            .then(pokeInfoObj => {
-                displayProfile(pokeInfoObj)
-            })
-            .catch(err => console.error(err))
+    fetch(currentPoke)
+    .then(res => {
+        if (res.ok) {
+            return res.json()
+        }
+        throw res.statusText
+    })  
+    .then(pokeInfoObj => {
+        displayProfile(pokeInfoObj)
+    })
+    .catch(err => console.error(err))
 }
 
 const displayProfile = (pokeInfoObj) => {
@@ -223,8 +222,6 @@ const displayProfile = (pokeInfoObj) => {
     weightValue.innerText = pokeInfoObj.weight
     weightRow.append(weightLabel, weightValue)
 
-
-  
     // fetch flavor text and growth info from Species endpoint
     let species = ''
     species = pokeInfoObj.species.url
@@ -259,8 +256,6 @@ const displaySpeciesDetail = (speciesObj) => {
     growthLabel.innerText = 'Growth Rate'
     growthValue.innerText = speciesObj.growth_rate.name
     growthRow.append(growthLabel, growthValue)
-
-    // stats.append(growthRow)
 
     // nest and show
     stats.append(abilityRow, heightRow, weightRow, growthRow) 
