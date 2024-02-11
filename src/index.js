@@ -7,11 +7,13 @@ const resultsList = document.querySelector('#pokemon-list')
 
 const profile = document.querySelector('#profile')
 const profileWrapper = document.createElement('article')
+
 // const profileHeader = document.createElement('div')
 const img = document.createElement('img')
 const name = document.createElement('h3')
 const id = document.createElement('span')
 const description = document.createElement('p')
+
 // stats table
 const stats = document.createElement('table')
 const abilityRow = document.createElement('tr')
@@ -50,18 +52,18 @@ const getPokemon = () => {
 }
 
 const getSpecificPoke = (currentPoke) => {
-    console.log(currentPoke)
-    return fetch(currentPoke)
-        .then(res => {
-            if (res.ok) {
-                return res.json()
-            }
-            throw res.statusText
-        })  
-        .then(pokeInfoObj => {
-            displayProfile(pokeInfoObj)
-        })
-        .catch(err => console.error(err))
+    // console.log(currentPoke)
+        fetch(currentPoke)
+            .then(res => {
+                if (res.ok) {
+                    return res.json()
+                }
+                throw res.statusText
+            })  
+            .then(pokeInfoObj => {
+                displayProfile(pokeInfoObj)
+            })
+            .catch(err => console.error(err))
 }
 
 //Display 
@@ -84,7 +86,7 @@ const reset = () => {
     weightRow.remove()
     abilityArray = []
     console.log(`current poke has been reset ${currentPoke}`)
-}   
+}
 
 const handleClick = (e, pokeListObj) => {
     reset()
@@ -116,7 +118,6 @@ const displayProfile = (pokeInfoObj) => {
     abilityRow.append(abilityLabel, abilityValue)
 
     // set height
-    
     heightLabel.innerText = 'Height'
     heightValue.innerText = pokeInfoObj.height
     heightRow.append(heightLabel, heightValue)
