@@ -1,22 +1,15 @@
 // ! Declare Globals
 const pokeAPI = 'https://pokeapi.co/api/v2/'
-
 const h1 = document.querySelector('h1')
 const selector = document.querySelector('#selector')
 const resultsList = document.querySelector('#pokemon-list')
 const searchFormSubmit = document.querySelector("form")
-
 const profile = document.querySelector('#profile')
 const profileWrapper = document.createElement('article')
-// const profileHeader = document.createElement('div')
 const img = document.createElement('img')
 const name = document.createElement('h3')
 const id = document.createElement('span')
-// const flavorWrapper = document.createElement('div') 
-// flavorWrapper.id = 'flavor-wrap'
 const flavorText = document.createElement('p')
-
-// stats table
 const stats = document.createElement('table')
 const abilityRow = document.createElement('tr')
 const abilityLabel = document.createElement('td')
@@ -51,7 +44,6 @@ const getPokemon = () => {
         })  
         .then(allPokeList => {
             allPokeList.results.forEach(pokemon => displayAllPokemon(pokemon))
-        //    {debugger}
         })
         .catch(err => console.error(err))
 }
@@ -172,7 +164,6 @@ const reset = () => {
     img.remove()
     name.remove()
     id.remove()
-    // flavorWrapper.remove()
     flavorText.innerText = ''
     flavorText.remove()
     stats.remove()
@@ -184,7 +175,6 @@ const reset = () => {
 }
 
 const getSpecificPoke = (currentPoke) => {
-    // console.log(currentPoke)
         fetch(currentPoke)
             .then(res => {
                 if (res.ok) {
@@ -203,6 +193,7 @@ const displayProfile = (pokeInfoObj) => {
     profileWrapper.setAttribute('poke-data', pokeInfoObj.name)
     profileWrapper.setAttribute('draggable', true)
     profileWrapper.addEventListener('dragstart', handleDragStart)
+
     // set image, name, pokedex number
     img.src = pokeInfoObj.sprites.other.dream_world.front_default
     const setName = pokeInfoObj.name
@@ -249,13 +240,13 @@ const getSpecies = (species) => {
             throw res.statusText
         })
         .then(speciesObj => {
-            // console.log(speciesObj)
             displaySpeciesDetail(speciesObj)
         })
         .catch(err => console.error(err))
 }
 
 const displaySpeciesDetail = (speciesObj) => {
+    // get flavor text, remove line breaks, set text
     flavor = speciesObj.flavor_text_entries[1].flavor_text
     const removeLineBreaks = flavor.split('\n')
     console.log(removeLineBreaks)
@@ -263,7 +254,6 @@ const displaySpeciesDetail = (speciesObj) => {
     console.log(flavorClean)
     flavorText.innerText = flavorClean
     flavorText.id = 'flavor-text'
-    // flavorWrapper.append(flavorText)
 
     // set growth rate
     growthLabel.innerText = 'Growth Rate'
@@ -272,10 +262,10 @@ const displaySpeciesDetail = (speciesObj) => {
 
     // stats.append(growthRow)
 
-        // nest and show
-stats.append(abilityRow, heightRow, weightRow, growthRow) 
-profileWrapper.append(img, name, id, flavorText, stats)
-profile.append(profileWrapper)
+    // nest and show
+    stats.append(abilityRow, heightRow, weightRow, growthRow) 
+    profileWrapper.append(img, name, id, flavorText, stats)
+    profile.append(profileWrapper)
 }
 
 // ! Start app logic on load
