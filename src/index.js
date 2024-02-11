@@ -8,25 +8,28 @@ const searchFormSubmit = document.querySelector("form")
 
 const profile = document.querySelector('#profile')
 const profileWrapper = document.createElement('article')
-
 // const profileHeader = document.createElement('div')
 const img = document.createElement('img')
 const name = document.createElement('h3')
 const id = document.createElement('span')
-const description = document.createElement('p')
+// const flavorWrapper = document.createElement('div') 
+// flavorWrapper.id = 'flavor-wrap'
+const flavorText = document.createElement('p')
 
 // stats table
 const stats = document.createElement('table')
 const abilityRow = document.createElement('tr')
 const abilityLabel = document.createElement('td')
 const abilityValue = document.createElement('td')
-
 const heightRow = document.createElement('tr')
 const heightLabel = document.createElement('td')
 const heightValue = document.createElement('td')
 const weightRow = document.createElement('tr')
 const weightLabel = document.createElement('td')
 const weightValue = document.createElement('td')
+const growthRow = document.createElement('tr')
+const growthLabel = document.createElement('td')
+const growthValue = document.createElement('td')
 
 const teamArray = [null, null, null, null, null, null]
 let currentPoke = ''
@@ -94,23 +97,93 @@ const searchByName = (searchName) => {
             // const lowercaseName = searchName.toLowerCase()
             // if (pokemon.name.toLowerCase().startsWith(lowercaseName)) {
             //     renderSearchedName(pokemon)
-                if (pokemon.name.startsWith(searchName)) {
-                    renderSearchedName(pokemon.name)   
-            }
-            
+            if (pokemon.name.startsWith(searchName)) {
+                    renderSearchedName(pokemon.name)
+                }
+                
+            })
         })
-    })
+        
+    }
+    
+    // Searched Name Display Function
+    const renderSearchedName = (searchName) => {
+        const searchResult = document.createElement("li")
+        searchResult.innerText = searchName
+        resultsList.append(searchResult)
+    }
+    
+    // <!---- EVENT HANDLERS ---->
+    const handleClick = (e, pokeListObj) => {
+        reset()
+        currentPoke = e.target.id //sets specific pokemon's url
+        console.log(`setting current poke to ${currentPoke}`)
+        return getSpecificPoke(currentPoke)
+    }
 
+    // Drag and Drop stuff
+    const setupDragDrop = () => {
+        document.querySelectorAll('.members').forEach(member => {
+            member.addEventListener('dragover', handleDragOver);
+            member.addEventListener('dragenter', handleDragEnter);
+            member.addEventListener('drop', handleDrop);
+        });
+    }
+    //update team ui
+    const updateTeamUI = () => {
+        document.querySelectorAll('.members').forEach((member, index) => {
+            member.innerText = teamArray[index] ? teamArray[index] : '';
+        });
+    }
+    //! drag and drop event handlers
+    const handleDragStart = e => {
+        let data;
+        //! changed so both list and wrapper use setAttribute('pokedata'
+        data = e.target.getAttribute('poke-data'); //store data
+        e.dataTransfer.setData('text/plain', data);
+    };
+    
+    const handleDragOver = e => {
+        e.preventDefault();
+    };
+    
+    const handleDragEnter = e => {
+        e.preventDefault(); 
+    };
+    
+    const handleDrop = e => {
+        e.preventDefault(); 
+        const pokeNameDrag = e.dataTransfer.getData('text/plain');
+        const slotIndex = parseInt(e.target.getAttribute('data-index'), 10);
+        
+        if (slotIndex >= 0 && slotIndex < teamArray.length) {
+            teamArray[slotIndex] = pokeNameDrag;
+            updateTeamUI();
+        } else {
+            console.error("Invalid slot");
+        }
+    };
+
+//! Display pokemon profile
+// Reset and clear profile before loading another
+const reset = () => {
+    // currentPoke = ''
+    profileWrapper.remove()
+    img.remove()
+    name.remove()
+    id.remove()
+    // flavorWrapper.remove()
+    flavorText.innerText = ''
+    flavorText.remove()
+    stats.remove()
+    heightRow.remove()
+    weightRow.remove()
+    abilityRow.remove()
+    growthRow.remove()
+    abilityArray = []
+    console.log(`current poke has been reset ${currentPoke}`)
 }
 
-// Searched Name Display Function
-const renderSearchedName = (searchName) => {
-    const searchResult = document.createElement("li")
-    searchResult.innerText = searchName
-    resultsList.append(searchResult)
-}
-
-// <!---- EVENT HANDLERS ---->
 const getSpecificPoke = (currentPoke) => {
     // console.log(currentPoke)
         fetch(currentPoke)
@@ -126,78 +199,19 @@ const getSpecificPoke = (currentPoke) => {
             .catch(err => console.error(err))
 }
 
-// Drag and Drop stuff
-const setupDragDrop = () => {
-    document.querySelectorAll('.members').forEach(member => {
-        member.addEventListener('dragover', handleDragOver);
-        member.addEventListener('dragenter', handleDragEnter);
-        member.addEventListener('drop', handleDrop);
-    });
-}
-//update team ui
-const updateTeamUI = () => {
-    document.querySelectorAll('.members').forEach((member, index) => {
-        member.innerText = teamArray[index] ? teamArray[index] : '';
-    });
-}
-//! drag and drop event handlers
-const handleDragStart = e => {
-    let data;
-    //! changed so both list and wrapper use setAttribute('pokedata'
-    data = e.target.getAttribute('poke-data'); //store data
-    e.dataTransfer.setData('text/plain', data);
-};
-
-const handleDragOver = e => {
-    e.preventDefault();
-};
-
-const handleDragEnter = e => {
-    e.preventDefault(); 
-};
-
-const handleDrop = e => {
-    e.preventDefault(); 
-    const pokeNameDrag = e.dataTransfer.getData('text/plain');
-    const slotIndex = parseInt(e.target.getAttribute('data-index'), 10);
-
-    if (slotIndex >= 0 && slotIndex < teamArray.length) {
-        teamArray[slotIndex] = pokeNameDrag;
-        updateTeamUI();
-    } else {
-        console.error("Invalid slot");
-    }
-};
-const reset = () => {
-    currentPoke = ''
-    profileWrapper.remove()
-    img.remove()
-    name.remove()
-    stats.remove()
-    heightRow.remove()
-    weightRow.remove()
-    abilityArray = []
-    console.log(`current poke has been reset ${currentPoke}`)
-}
-
-const handleClick = (e, pokeListObj) => {
-    reset()
-    currentPoke = e.target.id //sets specific pokemon's url
-    console.log(`setting current poke to ${currentPoke}`)
-    return getSpecificPoke(currentPoke)
-}
-
-//! Display pokemon profile
 const displayProfile = (pokeInfoObj) => {
-    console.log(pokeInfoObj) // print array of poke info
-    profileWrapper.id = 'profile-wrapper' // for styling
-
+    profileWrapper.id = 'profile-wrapper'
+    profileWrapper.setAttribute('poke-data', pokeInfoObj.name)
+    profileWrapper.setAttribute('draggable', true)
+    profileWrapper.addEventListener('dragstart', handleDragStart)
     // set image, name, pokedex number
     img.src = pokeInfoObj.sprites.other.dream_world.front_default
-    img.alt = pokeInfoObj.name //to uppercase
-    name.innerText = pokeInfoObj.name
+    const setName = pokeInfoObj.name
+    const capFirstLetter = setName[0].toUpperCase()
+    img.alt = pokeInfoObj.name
+    name.innerText = `${capFirstLetter}${setName.slice(1)}`
     id.innerText = `#${pokeInfoObj.id}`
-    
+
     // list abilities
     abilityLabel.innerText = 'Abilities'
     const abilityObj = pokeInfoObj.abilities
@@ -219,26 +233,13 @@ const displayProfile = (pokeInfoObj) => {
     weightValue.innerText = pokeInfoObj.weight
     weightRow.append(weightLabel, weightValue)
 
-    // nest and show
-    stats.append(abilityRow, heightRow, weightRow) 
-    profileWrapper.setAttribute('poke-data', pokeInfoObj.name);
-    profileWrapper.setAttribute('draggable', true);
-    profileWrapper.addEventListener('dragstart', handleDragStart);
-    profileWrapper.append(img, name, id, stats)
-    profile.append(profileWrapper)
+
   
-    // fetch species info growth-rate,
+    // fetch flavor text and growth info from Species endpoint
     let species = ''
     species = pokeInfoObj.species.url
-    console.log(`species set to ${species}`)
-
     return getSpecies(species)
 }
-
-// include a call to 
-// https://pokeapi.co/api/v2/pokemon-species/`${id}`
-// to fetch
-// flavor text, growth rate, 
 
 const getSpecies = (species) => {
     return fetch(species)
@@ -249,24 +250,31 @@ const getSpecies = (species) => {
             throw res.statusText
         })
         .then(speciesObj => {
-            console.log(speciesObj)
+            // console.log(speciesObj)
             displaySpeciesDetail(speciesObj)
         })
         .catch(err => console.error(err))
 }
 
 const displaySpeciesDetail = (speciesObj) => {
-    // description.innerText = speciesObj.
+    flavor = speciesObj.flavor_text_entries[1].flavor_text
+    flavorText.innerText = flavor
+    console.log(flavorText)
+    // flavorText.innerText = flavorText
+    flavorText.id = 'flavor-text'
+    // flavorWrapper.append(flavorText)
 
     // set growth rate
-    const growthRow = document.createElement('tr')
-    const growthLabel = document.createElement('td')
-    const growthValue = document.createElement('td')
     growthLabel.innerText = 'Growth Rate'
     growthValue.innerText = speciesObj.growth_rate.name
     growthRow.append(growthLabel, growthValue)
 
-    stats.append(growthRow)
+    // stats.append(growthRow)
+
+        // nest and show
+stats.append(abilityRow, heightRow, weightRow, growthRow) 
+profileWrapper.append(img, name, id, flavorText, stats)
+profile.append(profileWrapper)
 }
 
 // ! Start app logic on load
