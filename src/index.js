@@ -7,6 +7,7 @@ const searchFormSubmit = document.querySelector("form")
 const profile = document.querySelector('#profile')
 const profileWrapper = document.createElement('article')
 const img = document.createElement('img')
+const profileHeader = document.createElement('hgroup')
 const name = document.createElement('h3')
 const id = document.createElement('span')
 const flavorText = document.createElement('p')
@@ -198,6 +199,7 @@ const displayProfile = (pokeInfoObj) => {
     const capFirstLetter = setName[0].toUpperCase()
     img.alt = pokeInfoObj.name
     name.innerText = `${capFirstLetter}${setName.slice(1)}`
+    name.id = 'display-name'
     id.innerText = `#${pokeInfoObj.id}`
 
     // list abilities
@@ -255,8 +257,9 @@ const displaySpeciesDetail = (speciesObj) => {
     growthRow.append(growthLabel, growthValue)
 
     // nest and show
-    stats.append(abilityRow, heightRow, weightRow, growthRow) 
-    profileWrapper.append(img, name, id, flavorText, stats)
+    stats.append(abilityRow, heightRow, weightRow, growthRow)
+    profileHeader.append(name, id)
+    profileWrapper.append(img, profileHeader, flavorText, stats)
     profile.append(profileWrapper)
 }
 
