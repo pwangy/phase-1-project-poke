@@ -71,21 +71,21 @@ const getPokemons = () => {
 const displayAllPokemon = (pokeListObj) => {
     fetch(pokeListObj.url) // Fetch the detailed Pokémon data
         .then(response => {
-            if (!response.ok) throw new Error('Failed to fetch Pokémon details');
-            return response.json();
+            if (!response.ok) throw new Error('Failed to fetch Pokémon details')
+            return response.json()
         })
         .then(details => {
-            const li = document.createElement('li');
-            li.innerText = details.name;
+            const li = document.createElement('li')
+            li.innerText = details.name
             li.id = pokeListObj.url
-            resultsList.appendChild(li);
-            li.addEventListener('click', e => handleClick(e, details));
-            li.setAttribute('draggable', true);
-            li.setAttribute('poke-data', details.name); // set name for drag-and-drop
-            li.setAttribute('img-src', details.sprites.front_default); // set img-src for drag and drop
-            li.addEventListener('dragstart', handleDragStart);
+            resultsList.appendChild(li)
+            li.addEventListener('click', e => handleClick(e, details))
+            li.setAttribute('draggable', true)
+            li.setAttribute('poke-data', details.name) // set name for drag-and-drop
+            li.setAttribute('img-src', details.sprites.front_default) // set img-src for drag and drop
+            li.addEventListener('dragstart', handleDragStart)
         })
-        .catch(error => console.error('Error fetching Pokémon details:', error));
+        .catch(error => console.error('Error fetching Pokémon details:', error))
 }
 
 
@@ -143,7 +143,7 @@ const setupDragDrop = () => {
         member.addEventListener('dragover', handleDragOver)
         member.addEventListener('dragenter', handleDragEnter)
         member.addEventListener('drop', handleDrop)
-    });
+    })
 }
 // Update Container
 const updateTeamUI = () => {
@@ -151,14 +151,14 @@ const updateTeamUI = () => {
         const pokemon = teamArray[index];
         member.innerHTML = '' // clear slot
         if (pokemon) {
-            const imgElement = document.createElement('img');
+            const imgElement = document.createElement('img')
             imgElement.src = pokemon.imageUrl // set image source to stored url
             imgElement.alt = pokemon.name
             member.appendChild(imgElement) // append the image to the slot
 
-            const nameElement = document.createElement('p');
-            nameElement.textContent = pokemon.name; // set pokemon name
-            member.appendChild(nameElement); // append name to slot
+            const nameElement = document.createElement('p')
+            nameElement.textContent = pokemon.name // set pokemon name
+            member.appendChild(nameElement) // append name to slot
         }
     })
 }
@@ -217,10 +217,10 @@ const displayProfile = (pokeInfoObj) => {
 
     // nest and show
     stats.append(abilityRow, heightRow, weightRow) 
-    profileWrapper.setAttribute('poke-data', pokeInfoObj.name);
+    profileWrapper.setAttribute('poke-data', pokeInfoObj.name)
     profileWrapper.setAttribute('img-src', img.src = pokeInfoObj.sprites.front_default)
-    profileWrapper.setAttribute('draggable', true);
-    profileWrapper.addEventListener('dragstart', handleDragStart);
+    profileWrapper.setAttribute('draggable', true)
+    profileWrapper.addEventListener('dragstart', handleDragStart)
     profileWrapper.append(img, name, id, stats)
     profile.append(profileWrapper)
   
@@ -258,17 +258,17 @@ const handleDragStart = e => {
     const data = {
         name: e.target.getAttribute('poke-data'), 
         imageUrl: e.target.getAttribute('img-src')
-    };
-    e.dataTransfer.setData('application/json', JSON.stringify(data)); // package and set both name and URL
-};
+    }
+    e.dataTransfer.setData('application/json', JSON.stringify(data)) // package and set both name and URL
+}
 
 const handleDragOver = e => {
     e.preventDefault()
-};
+}
 
 const handleDragEnter = e => {
     e.preventDefault()
-};
+}
 
 const handleDrop = e => {
     e.preventDefault()
