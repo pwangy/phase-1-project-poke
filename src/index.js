@@ -50,6 +50,7 @@ const getPokemon = () => {
 }
 
 const getPokemons = () => {
+
     return fetch(`${pokeAPI}pokemon`)
         .then(res => {
             if (res.ok) {
@@ -59,20 +60,28 @@ const getPokemons = () => {
         })  
         .then(allPokeList => allPokeList.results)
         .catch(err => console.error(err))
+    
 }
 
-// DISPLAY FUNCTIONS
+// DISPLAY FUNCTIONS //! 
 const displayAllPokemon = (pokeListObj) => {
-    const li = document.createElement('li')
-    li.innerText = pokeListObj.name
-    li.id = pokeListObj.url
-    resultsList.appendChild(li)
-    li.addEventListener('click', e => handleClick(e, pokeListObj))
-    //! make list items draggable and attach event listener
-    li.setAttribute('draggable', true);
-    li.setAttribute('poke-data', pokeListObj.name); // stores name
-    //li.setAttribute('img-src', imageUrl); //!might use this to store imageUrl?
-    li.addEventListener('dragstart', handleDragStart)
+    fetch(pokeListObj.url) // Fetch the detailed Pokémon data
+        .then(response => {
+            if (!response.ok) throw new Error('Failed to fetch Pokémon details')
+            return response.json()
+        })
+        .then(details => {
+            const li = document.createElement('li')
+            li.innerText = details.name
+            li.id = pokeListObj.url
+            resultsList.appendChild(li)
+            li.addEventListener('click', e => handleClick(e, details))
+            li.setAttribute('draggable', true)
+            li.setAttribute('poke-data', details.name) // set name for drag-and-drop
+            li.setAttribute('img-src', details.sprites.front_default) // set img-src for drag and drop
+            li.addEventListener('dragstart', handleDragStart)
+        })
+        .catch(error => console.error('Error fetching Pokémon details:', error))
 }
 
 // <!---- SEARCH FUNCTIONALITY ---->
@@ -95,10 +104,9 @@ const searchByName = (searchName) => {
                 }
                 
             })
-        })
-        
-    }
-    
+            .catch(err => console.error(err))
+}
+                       
     // Searched Name Display Function
     const renderSearchedName = (searchName) => {
         const searchResult = document.createElement("li")
@@ -106,55 +114,69 @@ const searchByName = (searchName) => {
         resultsList.append(searchResult)
     }
     
-    // <!---- EVENT HANDLERS ---->
-    const handleClick = (e, pokeListObj) => {
-        reset()
-        currentPoke = e.target.id //sets specific pokemon's url
-        return getSpecificPoke(currentPoke)
-    }
+// <!---- EVENT HANDLERS ---->
+const handleClick = (e, pokeListObj) => {
+  reset()
+  currentPoke = e.target.id //sets specific pokemon's url
+  return getSpecificPoke(currentPoke)
+}
 
-    // Drag and Drop stuff
-    const setupDragDrop = () => {
-        document.querySelectorAll('.members').forEach(member => {
-            member.addEventListener('dragover', handleDragOver);
-            member.addEventListener('dragenter', handleDragEnter);
-            member.addEventListener('drop', handleDrop);
-        });
-    }
-    //update team ui
-    const updateTeamUI = () => {
-        document.querySelectorAll('.members').forEach((member, index) => {
-            member.innerText = teamArray[index] ? teamArray[index] : '';
-        });
-    }
-    //! drag and drop event handlers
-    const handleDragStart = e => {
-        let data;
-        //! changed so both list and wrapper use setAttribute('pokedata'
-        data = e.target.getAttribute('poke-data'); //store data
-        e.dataTransfer.setData('text/plain', data);
-    };
-    
-    const handleDragOver = e => {
-        e.preventDefault();
-    };
-    
-    const handleDragEnter = e => {
-        e.preventDefault(); 
-    };
-    
-    const handleDrop = e => {
-        e.preventDefault(); 
-        const pokeNameDrag = e.dataTransfer.getData('text/plain');
-        const slotIndex = parseInt(e.target.getAttribute('data-index'), 10);
-        
-        if (slotIndex >= 0 && slotIndex < teamArray.length) {
-            teamArray[slotIndex] = pokeNameDrag;
-            updateTeamUI();
-        } else {
-            console.error("Invalid slot");
+
+// Drag and Drop stuff
+const setupDragDrop = () => {
+    document.querySelectorAll('.members').forEach(member => {
+        member.addEventListener('dragover', handleDragOver);
+        member.addEventListener('dragenter', handleDragEnter);
+        member.addEventListener('drop', handleDrop);
+    });
+}
+
+// Update Container
+const updateTeamUI = () => {
+    document.querySelectorAll('.members').forEach((member, index) => {
+        const pokemon = teamArray[index];
+        member.innerHTML = '' // clear slot
+        if (pokemon) {
+            const imgElement = document.createElement('img')
+            imgElement.src = pokemon.imageUrl // set image source to stored url
+            imgElement.alt = pokemon.name
+            member.appendChild(imgElement) // append the image to the slot
+
+            const nameElement = document.createElement('p')
+            nameElement.textContent = pokemon.name // set pokemon name
+            member.appendChild(nameElement) // append name to slot
         }
-    };
+    })
+}
+
+//! drag and drop event handlers
+const handleDragStart = e => {
+    let data;
+    //! changed so both list and wrapper use setAttribute('pokedata'
+    data = e.target.getAttribute('poke-data'); //store data
+    e.dataTransfer.setData('text/plain', data);
+};
+
+const handleDragOver = e => {
+    e.preventDefault();
+};
+
+const handleDragEnter = e => {
+    e.preventDefault(); 
+};
+
+const handleDrop = e => {
+    e.preventDefault(); 
+    const pokeNameDrag = e.dataTransfer.getData('text/plain');
+    const slotIndex = parseInt(e.target.getAttribute('data-index'), 10);
+
+    if (slotIndex >= 0 && slotIndex < teamArray.length) {
+        teamArray[slotIndex] = pokeNameDrag;
+        updateTeamUI();
+    } else {
+        console.error("Invalid slot");
+    }
+};
 
 //! Display pokemon profile
 // Reset and clear profile before loading another
@@ -190,6 +212,7 @@ const getSpecificPoke = (currentPoke) => {
 const displayProfile = (pokeInfoObj) => {
     profileWrapper.id = 'profile-wrapper'
     profileWrapper.setAttribute('poke-data', pokeInfoObj.name)
+    profileWrapper.setAttribute('img-src', img.src = pokeInfoObj.sprites.front_default)
     profileWrapper.setAttribute('draggable', true)
     profileWrapper.addEventListener('dragstart', handleDragStart)
 
@@ -222,7 +245,7 @@ const displayProfile = (pokeInfoObj) => {
     weightLabel.innerText = 'Weight'
     weightValue.innerText = pokeInfoObj.weight
     weightRow.append(weightLabel, weightValue)
-
+  
     // fetch flavor text and growth info from Species endpoint
     let species = ''
     species = pokeInfoObj.species.url
@@ -243,6 +266,35 @@ const getSpecies = (species) => {
         .catch(err => console.error(err))
 }
 
+//drag and drop event handlers
+const handleDragStart = e => {
+    const data = {
+        name: e.target.getAttribute('poke-data'), 
+        imageUrl: e.target.getAttribute('img-src')
+    }
+    e.dataTransfer.setData('application/json', JSON.stringify(data)) // package and set both name and URL
+}
+
+const handleDragOver = e => {
+    e.preventDefault()
+}
+
+const handleDragEnter = e => {
+    e.preventDefault()
+}
+
+const handleDrop = e => {
+    e.preventDefault()
+    const { name, imageUrl } = JSON.parse(e.dataTransfer.getData('application/json'))
+    const slotIndex = parseInt(e.target.getAttribute('data-index'), 10)
+
+    if (slotIndex >= 0 && slotIndex < teamArray.length) {
+        teamArray[slotIndex] = { name, imageUrl } // store both name and image URL
+        updateTeamUI() // invoke to update UI with name/images
+    } else {
+        console.error("Invalid slot")
+    }
+}
 const displaySpeciesDetail = (speciesObj) => {
     // get flavor text, remove line breaks, set text
     flavor = speciesObj.flavor_text_entries[1].flavor_text
