@@ -81,8 +81,8 @@ const displayAllPokemon = (pokeListObj) => {
             resultsList.appendChild(li);
             li.addEventListener('click', e => handleClick(e, details));
             li.setAttribute('draggable', true);
-            li.setAttribute('poke-data', details.name); // stores name for drag-and-drop
-            li.setAttribute('img-src', details.sprites.front_default || details.sprites.other['official-artwork'].front_default); // Use official artwork as a fallback
+            li.setAttribute('poke-data', details.name); // set name for drag-and-drop
+            li.setAttribute('img-src', details.sprites.front_default); // set img-src for drag and drop
             li.addEventListener('dragstart', handleDragStart);
         })
         .catch(error => console.error('Error fetching Pokémon details:', error));
@@ -218,6 +218,7 @@ const displayProfile = (pokeInfoObj) => {
     // nest and show
     stats.append(abilityRow, heightRow, weightRow) 
     profileWrapper.setAttribute('poke-data', pokeInfoObj.name);
+    profileWrapper.setAttribute('img-src', img.src = pokeInfoObj.sprites.front_default)
     profileWrapper.setAttribute('draggable', true);
     profileWrapper.addEventListener('dragstart', handleDragStart);
     profileWrapper.append(img, name, id, stats)
