@@ -54,8 +54,10 @@ const getPokemon = () => {
 }
 
 const getPokemons = () => {
+    console.log("a")
     return fetch(`${pokeAPI}pokemon`)
         .then(res => {
+            console.log("a")
             if (res.ok) {
                 return res.json()
             }
@@ -65,19 +67,24 @@ const getPokemons = () => {
         .catch(err => console.error(err))
 }
 
-// DISPLAY FUNCTIONS
+// DISPLAY FUNCTIONS //! 
 const displayAllPokemon = (pokeListObj) => {
-    const li = document.createElement('li')
-    li.innerText = pokeListObj.name
-    li.id = pokeListObj.url
-    resultsList.appendChild(li)
-    li.addEventListener('click', e => handleClick(e, pokeListObj))
-    //! make list items draggable and attach event listener
-    li.setAttribute('draggable', true);
-    li.setAttribute('poke-data', pokeListObj.name); // stores name
-    //li.setAttribute('img-src', imageUrl); //!might use this to store imageUrl?
-    li.addEventListener('dragstart', handleDragStart)
-}
+    fetch(pokeListObj.url)
+        .then(response => response.json())
+        .then(pokemonDetails => {
+            const li = document.createElement('li')
+            //console.log(pokemonDetails);
+            li.id = pokemonDetails.url
+            li.innerText = pokemonDetails.name
+            li.setAttribute('draggable', true)
+            li.setAttribute('poke-data', pokemonDetails.name)
+            li.setAttribute('img-src', pokemonDetails.sprites.front_default) // assign imgUrl
+            li.addEventListener('dragstart', handleDragStart)
+            resultsList.appendChild(li);
+            li.addEventListener('click', e => handleClick(e, pokemonDetails))
+        });
+};
+
 
 // <!---- SEARCH FUNCTIONALITY ---->
 // Search Event Listener
@@ -129,45 +136,59 @@ const getSpecificPoke = (currentPoke) => {
 // Drag and Drop stuff
 const setupDragDrop = () => {
     document.querySelectorAll('.members').forEach(member => {
-        member.addEventListener('dragover', handleDragOver);
-        member.addEventListener('dragenter', handleDragEnter);
-        member.addEventListener('drop', handleDrop);
+        member.addEventListener('dragover', handleDragOver)
+        member.addEventListener('dragenter', handleDragEnter)
+        member.addEventListener('drop', handleDrop)
     });
 }
-//update team ui
+// Update Container
 const updateTeamUI = () => {
     document.querySelectorAll('.members').forEach((member, index) => {
-        member.innerText = teamArray[index] ? teamArray[index] : '';
-    });
+        const pokemon = teamArray[index];
+        member.innerHTML = '' // clear slot
+        if (pokemon) {
+            const imgElement = document.createElement('img');
+            imgElement.src = pokemon.imageUrl // set image source to stored url
+            imgElement.alt = pokemon.name
+            member.appendChild(imgElement) // append the image to the slot
+
+            const nameElement = document.createElement('p');
+            nameElement.textContent = pokemon.name; // set pokemon name
+            member.appendChild(nameElement); // append name to slot
+        }
+    })
 }
-//! drag and drop event handlers
+
+//drag and drop event handlers
 const handleDragStart = e => {
-    let data;
-    //! changed so both list and wrapper use setAttribute('pokedata'
-    data = e.target.getAttribute('poke-data'); //store data
-    e.dataTransfer.setData('text/plain', data);
+    const data = {
+        name: e.target.getAttribute('poke-data'), 
+        imageUrl: e.target.getAttribute('img-src')
+    };
+    e.dataTransfer.setData('application/json', JSON.stringify(data)); // package and set both name and URL
 };
 
 const handleDragOver = e => {
-    e.preventDefault();
+    e.preventDefault()
 };
 
 const handleDragEnter = e => {
-    e.preventDefault(); 
+    e.preventDefault()
 };
 
 const handleDrop = e => {
     e.preventDefault(); 
-    const pokeNameDrag = e.dataTransfer.getData('text/plain');
+    const { name, imageUrl } = JSON.parse(e.dataTransfer.getData('application/json'))
     const slotIndex = parseInt(e.target.getAttribute('data-index'), 10);
 
     if (slotIndex >= 0 && slotIndex < teamArray.length) {
-        teamArray[slotIndex] = pokeNameDrag;
-        updateTeamUI();
+        teamArray[slotIndex] = { name, imageUrl } // store both name and image URL
+        updateTeamUI() // invoke to update UI with name/images
     } else {
-        console.error("Invalid slot");
+        console.error("Invalid slot")
     }
 };
+
 const reset = () => {
     currentPoke = ''
     profileWrapper.remove()
@@ -180,13 +201,16 @@ const reset = () => {
     console.log(`current poke has been reset ${currentPoke}`)
 }
 
-const handleClick = (e, pokeListObj) => {
-    reset()
-    currentPoke = e.target.id //sets specific pokemon's url
-    console.log(`setting current poke to ${currentPoke}`)
-    return getSpecificPoke(currentPoke)
-}
-
+const handleClick = (e) => {
+    reset();
+    console.log(e.currentTarget);
+    const pokeUrl = e.currentTarget.getAttribute('id'); 
+    if (pokeUrl) {
+        getSpecificPoke(pokeUrl);
+    } else {
+        console.error("URL is not defined.");
+    }
+};
 //! Display pokemon profile
 const displayProfile = (pokeInfoObj) => {
     console.log(pokeInfoObj) // print array of poke info
@@ -234,6 +258,7 @@ const displayProfile = (pokeInfoObj) => {
 
     return getSpecies(species)
 }
+
 
 // include a call to 
 // https://pokeapi.co/api/v2/pokemon-species/`${id}`
