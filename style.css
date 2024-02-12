@@ -10,7 +10,6 @@ dl, dt, dd, ol, ul, li, fieldset, form, label, table, tr, th, td, article, foote
 	margin: 16px;
 	padding: 6px;
 	border: 1px solid #666;
-	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
 }
@@ -38,17 +37,60 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+/* End of Style Reset */
+
+
+html, body, header, hgroup, #display-name, #profile span {
+	margin-top: 0;
+	padding-top: 0;
+}
 
 body {
-	/* background-color: darkslateblue; */
+	padding-right: 0;
+	font-family: 'Noto Sans', 'Ariel', sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
+	font-variation-settings: "wdth" 100;
+	line-height: 1.6;
+	background-color: #222;
 }
 
 header {
-	background-color: blue;
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
 }
 
-h1 {
-	background-color: hotpink;
+#poke-logo {
+	height: 125px;
+	margin: 0 16px;
+	border: none;
+}
+
+#title-wrapper {
+	margin: 0;
+	position: relative;
+	background: rgb(55,99,174);
+	background: linear-gradient(180deg, rgba(55,99,174,1) 47%, rgba(34,44,95,1) 49%);
+	padding: 6px;
+	border-radius: 5px;
+	border: none;
+}
+
+#team-builder {
+	width: fit-content;
+	margin: 0;
+	padding: 3px 18px;
+	color: #fff;
+	font-size: 1.5em;
+	font-weight: 900;
+	-webkit-text-stroke: #a80d12;
+	-webkit-text-stroke-width: 1px;
+	background: rgb(239,27,36);
+	background: linear-gradient(180deg, rgba(239,27,36,1) 47%, rgba(169,14,19,1) 49%);
+	border: none;
+	box-shadow: inset 0 0 4px #222c5f;
 }
 
 #team {
@@ -74,17 +116,57 @@ h1 {
 }
 
 #profile {
+	margin: 16px 0 0 8px;
 	width: 74%;
-	background-color: darkblue;
+	background: rgb(247,225,116);
+	background: linear-gradient(90deg, rgba(247,225,116,1) 41%, rgba(246,211,43,1) 100%);
 	display: inline-block;
 	vertical-align: top;
+	border-radius: 3px;
 }
 
-#profile > img {
-	height: 200px;
+#profile-wrapper {
+	display: flex;
+	flex-flow: column nowrap;
+	background-color: #333;
+	border-radius: 3px;
 }
+
+#profile img {
+	max-height: 300px;
+}
+
+hgroup {
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	/* background-color: aquamarine; */
+}
+
+#display-name {
+	width: 75%;
+	font-size: 36px;
+	font-weight: 700;
+}
+
+#profile span {
+	width: 15%;
+	margin: 0 0 16px 0;
+}
+
 
 footer {
 	background-color: slateblue;
 }
 
+
+/* pulling hex values 
+pokemon dk blue
+	color: #3c5aa6;
+pokemon yellow shadow
+	color: #c7a008;
+pokemon lt blue
+	color: #2a75bb;
+pokemon yellow
+	color: #ffcb05;
+*/
