@@ -81,7 +81,7 @@ const displayAllPokemon = (pokeListObj) => {
             li.setAttribute('img-src', pokemonDetails.sprites.front_default) // assign imgUrl
             li.addEventListener('dragstart', handleDragStart)
             resultsList.appendChild(li);
-            li.addEventListener('click', e => handleClick(e, pokemonDetails))
+            li.addEventListener('click', e => handleClick(e, pokeListObj))
         });
 };
 
