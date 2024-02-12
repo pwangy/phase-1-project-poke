@@ -40,12 +40,13 @@ table {
 /* End of Style Reset */
 
 
-html, body, header {
+html, body, header, hgroup, #display-name, #profile span {
 	margin-top: 0;
 	padding-top: 0;
 }
 
 body {
+	padding-right: 0;
 	font-family: 'Noto Sans', 'Ariel', sans-serif;
 	font-optical-sizing: auto;
 	font-weight: 400;
@@ -138,17 +139,19 @@ header {
 hgroup {
 	display: flex;
 	flex-flow: row nowrap;
+	align-items: center;
 	/* background-color: aquamarine; */
 }
 
 #display-name {
 	width: 75%;
 	font-size: 36px;
+	font-weight: 700;
 }
 
 #profile span {
 	width: 15%;
-	margin-left: 0;
+	margin: 0 0 16px 0;
 }
 
 
