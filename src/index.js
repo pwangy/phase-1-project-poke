@@ -50,7 +50,6 @@ const getPokemon = () => {
 }
 
 const getPokemons = () => {
-
     return fetch(`${pokeAPI}pokemon`)
         .then(res => {
             if (res.ok) {
@@ -63,7 +62,7 @@ const getPokemons = () => {
     
 }
 
-// DISPLAY FUNCTIONS //! 
+// DISPLAY FUNCTIONS
 const displayAllPokemon = (pokeListObj) => {
     fetch(pokeListObj.url) // Fetch the detailed Pokémon data
         .then(response => {
@@ -105,14 +104,15 @@ const searchByName = (searchName) => {
                 
             })
             .catch(err => console.error(err))
+})
 }
-                       
-    // Searched Name Display Function
-    const renderSearchedName = (searchName) => {
-        const searchResult = document.createElement("li")
-        searchResult.innerText = searchName
-        resultsList.append(searchResult)
-    }
+                      
+// Searched Name Display Function
+const renderSearchedName = (searchName) => {
+    const searchResult = document.createElement("li")
+    searchResult.innerText = searchName
+    resultsList.append(searchResult)
+}
     
 // <!---- EVENT HANDLERS ---->
 const handleClick = (e, pokeListObj) => {
@@ -120,7 +120,6 @@ const handleClick = (e, pokeListObj) => {
   currentPoke = e.target.id //sets specific pokemon's url
   return getSpecificPoke(currentPoke)
 }
-
 
 // Drag and Drop stuff
 const setupDragDrop = () => {
@@ -148,35 +147,6 @@ const updateTeamUI = () => {
         }
     })
 }
-
-//! drag and drop event handlers
-const handleDragStart = e => {
-    let data;
-    //! changed so both list and wrapper use setAttribute('pokedata'
-    data = e.target.getAttribute('poke-data'); //store data
-    e.dataTransfer.setData('text/plain', data);
-};
-
-const handleDragOver = e => {
-    e.preventDefault();
-};
-
-const handleDragEnter = e => {
-    e.preventDefault(); 
-};
-
-const handleDrop = e => {
-    e.preventDefault(); 
-    const pokeNameDrag = e.dataTransfer.getData('text/plain');
-    const slotIndex = parseInt(e.target.getAttribute('data-index'), 10);
-
-    if (slotIndex >= 0 && slotIndex < teamArray.length) {
-        teamArray[slotIndex] = pokeNameDrag;
-        updateTeamUI();
-    } else {
-        console.error("Invalid slot");
-    }
-};
 
 //! Display pokemon profile
 // Reset and clear profile before loading another
@@ -295,6 +265,7 @@ const handleDrop = e => {
         console.error("Invalid slot")
     }
 }
+
 const displaySpeciesDetail = (speciesObj) => {
     // get flavor text, remove line breaks, set text
     flavor = speciesObj.flavor_text_entries[1].flavor_text
