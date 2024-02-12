@@ -69,21 +69,25 @@ const getPokemons = () => {
 
 // DISPLAY FUNCTIONS //! 
 const displayAllPokemon = (pokeListObj) => {
-    fetch(pokeListObj.url)
-        .then(response => response.json())
-        .then(pokemonDetails => {
-            const li = document.createElement('li')
-            //console.log(pokemonDetails);
-            li.id = pokemonDetails.url
-            li.innerText = pokemonDetails.name
-            li.setAttribute('draggable', true)
-            li.setAttribute('poke-data', pokemonDetails.name)
-            li.setAttribute('img-src', pokemonDetails.sprites.front_default) // assign imgUrl
-            li.addEventListener('dragstart', handleDragStart)
+    fetch(pokeListObj.url) // Fetch the detailed Pokémon data
+        .then(response => {
+            if (!response.ok) throw new Error('Failed to fetch Pokémon details');
+            return response.json();
+        })
+        .then(details => {
+            const li = document.createElement('li');
+            li.innerText = details.name;
+            li.id = pokeListObj.url
             resultsList.appendChild(li);
-            li.addEventListener('click', e => handleClick(e, pokeListObj))
-        });
-};
+            li.addEventListener('click', e => handleClick(e, details));
+            li.setAttribute('draggable', true);
+            li.setAttribute('poke-data', details.name); // stores name for drag-and-drop
+            li.setAttribute('img-src', details.sprites.front_default || details.sprites.other['official-artwork'].front_default); // Use official artwork as a fallback
+            li.addEventListener('dragstart', handleDragStart);
+        })
+        .catch(error => console.error('Error fetching Pokémon details:', error));
+}
+
 
 
 // <!---- SEARCH FUNCTIONALITY ---->
