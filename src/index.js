@@ -54,10 +54,9 @@ const getPokemon = () => {
 }
 
 const getPokemons = () => {
-    console.log("a")
+
     return fetch(`${pokeAPI}pokemon`)
         .then(res => {
-            console.log("a")
             if (res.ok) {
                 return res.json()
             }
@@ -65,6 +64,7 @@ const getPokemons = () => {
         })  
         .then(allPokeList => allPokeList.results)
         .catch(err => console.error(err))
+    
 }
 
 // DISPLAY FUNCTIONS //! 
@@ -159,35 +159,7 @@ const updateTeamUI = () => {
     })
 }
 
-//drag and drop event handlers
-const handleDragStart = e => {
-    const data = {
-        name: e.target.getAttribute('poke-data'), 
-        imageUrl: e.target.getAttribute('img-src')
-    };
-    e.dataTransfer.setData('application/json', JSON.stringify(data)); // package and set both name and URL
-};
 
-const handleDragOver = e => {
-    e.preventDefault()
-};
-
-const handleDragEnter = e => {
-    e.preventDefault()
-};
-
-const handleDrop = e => {
-    e.preventDefault(); 
-    const { name, imageUrl } = JSON.parse(e.dataTransfer.getData('application/json'))
-    const slotIndex = parseInt(e.target.getAttribute('data-index'), 10);
-
-    if (slotIndex >= 0 && slotIndex < teamArray.length) {
-        teamArray[slotIndex] = { name, imageUrl } // store both name and image URL
-        updateTeamUI() // invoke to update UI with name/images
-    } else {
-        console.error("Invalid slot")
-    }
-};
 
 const reset = () => {
     currentPoke = ''
@@ -280,6 +252,35 @@ const getSpecies = (species) => {
         .catch(err => console.error(err))
 }
 
+//drag and drop event handlers
+const handleDragStart = e => {
+    const data = {
+        name: e.target.getAttribute('poke-data'), 
+        imageUrl: e.target.getAttribute('img-src')
+    };
+    e.dataTransfer.setData('application/json', JSON.stringify(data)); // package and set both name and URL
+};
+
+const handleDragOver = e => {
+    e.preventDefault()
+};
+
+const handleDragEnter = e => {
+    e.preventDefault()
+};
+
+const handleDrop = e => {
+    e.preventDefault()
+    const { name, imageUrl } = JSON.parse(e.dataTransfer.getData('application/json'))
+    const slotIndex = parseInt(e.target.getAttribute('data-index'), 10)
+
+    if (slotIndex >= 0 && slotIndex < teamArray.length) {
+        teamArray[slotIndex] = { name, imageUrl } // store both name and image URL
+        updateTeamUI() // invoke to update UI with name/images
+    } else {
+        console.error("Invalid slot")
+    }
+}
 const displaySpeciesDetail = (speciesObj) => {
     // description.innerText = speciesObj.
 
