@@ -125,33 +125,21 @@ header {
 }
 
 #profile-wrapper {
-	/* padding-top: 6px; */
 	display: flex;
 	flex-flow: column nowrap;
 	background-color: #333;
 	border-radius: 3px;
-	background-size: 48%;
-	background-repeat: no-repeat;
-    background-origin: border-box;
-	background-position: left 16% top -7%;
 }
 
 #profile img {
 	max-height: 300px;
 	border: none;
-	/* background-size: 45%;
-	background-repeat: no-repeat;
-    background-origin: border-box;
-	background-position: left 32% bottom 95%; */
-    /* background-position-y: center;
-    background-position-x: center; */
 }
 
 hgroup {
 	display: flex;
 	flex-flow: row nowrap;
 	align-items: center;
-	/* background-color: aquamarine; */
 }
 
 #display-name {
@@ -193,7 +181,6 @@ footer {
 	margin-bottom: 0;
 	font-size: smaller;
 	border: none;
-	/* background-color: slateblue; */
 }
 
 footer p {
@@ -225,4 +212,3 @@ pokemon lt blue
 pokemon yellow
 	color: #ffcb05;
 */
-
