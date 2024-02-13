@@ -39,7 +39,6 @@ const getPokemon = () => {
             throw res.statusText
         })  
         .then(allPokeList => {
-            // console.log(allPokeList)
             allPokeList.results.forEach(pokemon => displayAllPokemon(pokemon))
         })
         .catch(err => console.error(err))
