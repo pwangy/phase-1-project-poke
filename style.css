@@ -169,8 +169,24 @@ hgroup {
 	border: none;
 }
 
-table, #profile p {
+#profile p {
+	margin: 0 16px 0 16px;
 	font-size: larger;
+	border: none;
+}
+
+table, tr, td {
+	font-size: 16px;
+	border: none;
+}
+
+table {
+	width: 75%;
+}
+
+.column {
+	width: 15%;
+	/* text-align: left; */
 }
 
 
