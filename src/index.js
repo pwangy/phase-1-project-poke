@@ -31,7 +31,7 @@ let currentPoke = ''
 
 // ! Fetch Data
 const getPokemon = () => {
-    return fetch(`${pokeAPI}pokemon`)
+    return fetch(`${pokeAPI}pokemon/?limit=151`)
         .then(res => {
             if (res.ok) {
                 return res.json()
@@ -45,7 +45,7 @@ const getPokemon = () => {
 }
 
 const getPokemons = () => {
-    return fetch(`${pokeAPI}pokemon`)
+    return fetch(`${pokeAPI}pokemon/`)
         .then(res => {
             if (res.ok) {
                 return res.json()
@@ -218,7 +218,6 @@ const displayProfile = (pokeInfoObj) => {
 
     // set image, name, pokedex number
     img.src = pokeInfoObj.sprites.other.dream_world.front_default
-    img.setAttribute('draggable', false)
     const setName = pokeInfoObj.name
     const capFirstLetter = setName[0].toUpperCase()
     img.alt = pokeInfoObj.name
@@ -227,7 +226,8 @@ const displayProfile = (pokeInfoObj) => {
     id.innerText = `#${pokeInfoObj.id}`
 
     // list abilities
-    abilityLabel.innerText = 'Abilities'
+    abilityLabel.innerText = 'Abilities:'
+    abilityLabel.className = 'column'
     const abilityObj = pokeInfoObj.abilities
     const abilityArray = []
     const abilityCount = abilityObj.length
@@ -238,12 +238,14 @@ const displayProfile = (pokeInfoObj) => {
     abilityRow.append(abilityLabel, abilityValue)
 
     // set height
-    heightLabel.innerText = 'Height'
+    heightLabel.innerText = 'Height:'
+    heightLabel.className = 'column'
     heightValue.innerText = pokeInfoObj.height
     heightRow.append(heightLabel, heightValue)
    
     // set weight
-    weightLabel.innerText = 'Weight'
+    weightLabel.innerText = 'Weight:'
+    weightLabel.className = 'column'
     weightValue.innerText = pokeInfoObj.weight
     weightRow.append(weightLabel, weightValue)
   
@@ -306,7 +308,8 @@ const displaySpeciesDetail = (speciesObj) => {
     flavorText.id = 'flavor-text'
 
     // set growth rate
-    growthLabel.innerText = 'Growth Rate'
+    growthLabel.innerText = 'Growth Rate:'
+    growthLabel.className = 'column'
     growthValue.innerText = speciesObj.growth_rate.name
     growthRow.append(growthLabel, growthValue)
 

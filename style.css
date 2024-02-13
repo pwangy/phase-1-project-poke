@@ -169,15 +169,50 @@ hgroup {
 	border: none;
 }
 
-table, #profile p {
+#profile p {
+	margin: 0 16px 0 16px;
 	font-size: larger;
+	border: none;
 }
 
+table, tr, td {
+	font-size: 16px;
+	border: none;
+}
+
+table {
+	width: 75%;
+}
+
+.column {
+	width: 15%;
+}
 
 footer {
-	background-color: slateblue;
+	margin-bottom: 0;
+	font-size: smaller;
+	border: none;
+	/* background-color: slateblue; */
 }
 
+footer p {
+	margin-bottom: 0;
+	text-align: center;
+	border: none;
+}
+
+footer a {
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+	color:  #30A7D7;
+	cursor: pointer;
+	border: none;
+}
+
+footer a:hover {
+	color: #ffcb05;
+}
 
 /* pulling hex values 
 pokemon dk blue
