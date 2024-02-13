@@ -323,7 +323,7 @@ const displaySpeciesDetail = (speciesObj) => {
 // ! Start app logic on load
 const loadStuff = () => {
     getPokemon()
-   DragDrop()
+    setupDragDrop()
 }
 
 loadStuff()
