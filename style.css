@@ -105,8 +105,39 @@ header {
 }
 
 #team-container div {
-	/* background-color: dimgray; */
+	 /* background-color: rgb(255, 0, 0);
+	  border: 5px solid #2a75bb;
+	 border-radius: 3px; */
 }
+
+.members {
+	background-color: #2a75bb;
+	border-radius: 3px;
+	display: flex;
+	flex-flow: column nowrap;
+	border: none;
+}
+
+.members p {
+	margin-top: 0;
+	background-color: snow;
+	color: #222;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: 700;
+	border-radius: 3px;
+}
+
+.members img {
+	height: 120px;
+	margin-bottom: 0;
+	padding: 0;
+	background-color: snow;
+	border-radius: 3px;
+	border: none;
+
+}
+
 
 #selector {
 	width: 25%;
