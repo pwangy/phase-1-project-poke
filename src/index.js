@@ -31,7 +31,7 @@ let currentPoke = ''
 
 // ! Fetch Data
 const getPokemon = () => {
-    return fetch(`${pokeAPI}pokemon`)
+    return fetch(`${pokeAPI}pokemon/?limit=151`)
         .then(res => {
             if (res.ok) {
                 return res.json()
@@ -39,13 +39,14 @@ const getPokemon = () => {
             throw res.statusText
         })  
         .then(allPokeList => {
+            console.log(allPokeList)
             allPokeList.results.forEach(pokemon => displayAllPokemon(pokemon))
         })
         .catch(err => console.error(err))
 }
 
 const getPokemons = () => {
-    return fetch(`${pokeAPI}pokemon`)
+    return fetch(`${pokeAPI}pokemon/`)
         .then(res => {
             if (res.ok) {
                 return res.json()
