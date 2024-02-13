@@ -44,6 +44,8 @@ const getPokemon = () => {
         .catch(err => console.error(err))
 }
 
+
+
 const getPokemons = () => {
     return fetch(`${pokeAPI}pokemon/`)
         .then(res => {
