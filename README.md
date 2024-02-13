@@ -16,7 +16,7 @@ import foobar
 
 # returns 'words'
 foobar.pluralize('word')
-
+```
 
 ## Deliverables
 - [x] Your app must be a HTML/CSS/JS frontend that accesses data from a public API or from a db.json file using json-server.
