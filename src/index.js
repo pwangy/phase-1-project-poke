@@ -219,6 +219,7 @@ const displayProfile = (pokeInfoObj) => {
 
     // set image, name, pokedex number
     img.src = pokeInfoObj.sprites.other.dream_world.front_default
+    img.setAttribute('draggable', false)
     const setName = pokeInfoObj.name
     const capFirstLetter = setName[0].toUpperCase()
     img.alt = pokeInfoObj.name
