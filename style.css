@@ -129,10 +129,21 @@ header {
 	flex-flow: column nowrap;
 	background-color: #333;
 	border-radius: 3px;
+	background-size: 52%;
+	background-repeat: no-repeat;
+    background-origin: border-box;
+	background-position: left 33% top -21%;
 }
 
 #profile img {
 	max-height: 300px;
+	border: none;
+	/* background-size: 45%;
+	background-repeat: no-repeat;
+    background-origin: border-box;
+	background-position: left 32% bottom 95%; */
+    /* background-position-y: center;
+    background-position-x: center; */
 }
 
 hgroup {
@@ -143,14 +154,23 @@ hgroup {
 }
 
 #display-name {
-	width: 75%;
+	max-width: 370px;
+	margin-right: 5px;
 	font-size: 36px;
 	font-weight: 700;
+	letter-spacing: 5px;
+	border: none;
 }
 
 #profile span {
 	width: 15%;
-	margin: 0 0 16px 0;
+	margin: 0 0 4px 0;
+	font-size: larger;
+	border: none;
+}
+
+table, #profile p {
+	font-size: larger;
 }
 
 
