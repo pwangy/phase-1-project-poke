@@ -4,6 +4,7 @@ const h1 = document.querySelector('h1')
 const selector = document.querySelector('#selector')
 const resultsList = document.querySelector('#pokemon-list')
 const searchFormSubmit = document.querySelector("form")
+const filter = document.querySelector('#filter')
 const profile = document.querySelector('#profile')
 const profileWrapper = document.createElement('article')
 const img = document.createElement('img')
@@ -59,49 +60,82 @@ const getPokemons = () => {
         })  
         .then(allPokeList => allPokeList.results)
         .catch(err => console.error(err))
-    
 }
 
 // DISPLAY FUNCTIONS
 const displayAllPokemon = (pokeListObj) => {
-    fetch(pokeListObj.url) // Fetch the detailed Pokémon data
-        .then(response => {
-            if (!response.ok) throw new Error('Failed to fetch Pokémon details')
-            return response.json()
-        })
-        .then(details => {
-            const li = document.createElement('li')
-            li.innerText = details.name
-            li.id = pokeListObj.url
-            resultsList.appendChild(li)
-            li.addEventListener('click', e => handleClick(e, details))
-            li.setAttribute('draggable', true)
-            li.setAttribute('poke-data', details.name) // set name for drag-and-drop
-            li.setAttribute('img-src', details.sprites.front_default) // set img-src for drag and drop
-            li.addEventListener('dragstart', handleDragStart)
-        })
-        .catch(error => console.error('Error fetching Pokémon details:', error))
+  fetch(pokeListObj.url) // Fetch the detailed Pokémon data
+    .then(response => {
+      if (!response.ok) throw new Error('Failed to fetch Pokémon details')
+      return response.json()
+    })
+    .then(details => {
+      const li = document.createElement('li')
+      li.innerText = details.name
+      li.id = pokeListObj.url
+      resultsList.appendChild(li)
+      li.addEventListener('click', e => handleClick(e, details))
+      li.setAttribute('draggable', true)
+      li.setAttribute('poke-data', details.name) // set name for drag-and-drop
+      li.setAttribute('img-src', details.sprites.front_default) // set img-src for drag and drop
+      li.addEventListener('dragstart', handleDragStart)
+    })
+    .catch(error => console.error('Error fetching Pokémon details:', error))
 }
 
+// <!---- FILTER FUNCTIONALITY ---->
+// 1. Filter Event Listener
+filter.addEventListener('change', e => {
+    // need e.preventDefault()?
+    // console.log(e.target.value)
+    handleFilterChange(e.target.value)   
+})
+
+// 2. Filter Click Handler
+const handleFilterChange = (filterName) => {
+    resultsList.innerHTML = ""
+    if (filterName === "alphabeticalByName") {
+        getPokemons().then((allPokeList) => {filterByAZ(allPokeList)})
+    }
+}
+
+// 3. Filter Array of Pokemon Alphabetically
+const filterByAZ = (allPokeList) => {
+    const sortedList = [...allPokeList]
+    sortedList.sort((a, b) => {
+      //localeCompare() method returns a negative value if a should be sorted before b, 
+      //a positive value if a should be sorted after b, and 0 if they are equal   
+      return a.name.localeCompare(b.name)  
+    })
+    renderFilteredNames(sortedList)
+}
+
+// 4. Filter Display Function --> Same as function below used for Search
+const renderFilteredNames = (sortedList) => {
+    sortedList.forEach(pokemon => {
+        const filterResult = document.createElement("li")
+        filterResult.innerText = pokemon.name
+        resultsList.append(filterResult)
+})
+}
+    
 // <!---- SEARCH FUNCTIONALITY ---->
 // Search Event Listener
+
 searchFormSubmit.addEventListener('submit', e => {
     e.preventDefault()
     searchByName(e.target.search.value)
 })
 
-// Search Input Function
+// 2. Search Input Function
 const searchByName = (searchName) => {
-    resultsList.innerHTML = ""
+    resultsList.innerHTML = ''
     getPokemons().then(allPokeList => {
         allPokeList.forEach(pokemon => {
-            // const lowercaseName = searchName.toLowerCase()
-            // if (pokemon.name.toLowerCase().startsWith(lowercaseName)) {
-            //     renderSearchedName(pokemon)
-            if (pokemon.name.startsWith(searchName)) {
-                    renderSearchedName(pokemon.name)
-                }
-                
+            const lowercaseName = searchName.toLowerCase()
+            if (pokemon.name.includes(lowercaseName)) {
+                renderSearchedName(pokemon.name) 
+            }
             })
             .catch(err => console.error(err))
 })
@@ -109,7 +143,7 @@ const searchByName = (searchName) => {
                       
 // Searched Name Display Function
 const renderSearchedName = (searchName) => {
-    const searchResult = document.createElement("li")
+    const searchResult = document.createElement('li')
     searchResult.innerText = searchName
     resultsList.append(searchResult)
 }
@@ -289,7 +323,7 @@ const displaySpeciesDetail = (speciesObj) => {
 // ! Start app logic on load
 const loadStuff = () => {
     getPokemon()
-    setupDragDrop()
+   DragDrop()
 }
 
 loadStuff()
