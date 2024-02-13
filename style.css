@@ -93,19 +93,57 @@ header {
 }
 
 #team {
+	padding: 0;
 	display: flex;
 	flex-flow: column nowrap;
 	background-color: darkslategray;
 }
 
 #team-container {
+	margin: 0;
+	padding: 0;
 	display: flex;
-	flex-direction: row;
+	flex-flow: row wrap;
+	justify-content: center;
+	background-color: #222;
 	/* background-color: darkolivegreen; */
 }
 
-#team-container div {
-	/* background-color: dimgray; */
+.members {
+	padding: 7px;
+	background-color: #2a75bb;
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	border-radius: 3px;
+	border: none;
+}
+
+.members img {
+	height: 120px;
+	width: 120px;
+	margin: 0;
+	padding: 0;
+	background-color: snow;
+	border-radius: 3px;
+	border: none;
+}
+
+.members p {
+	width: 120px;
+	margin: -3px 0 0 0;
+	padding: 0 0 3px 0;
+	background-color: snow;
+	color: #222;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: 700;
+	border-radius: 3px;
+	border: none;
+}
+
+#how-to {
+	background-color: darkblue;
 }
 
 #selector {
