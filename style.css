@@ -9,7 +9,7 @@ small, strike, strong, b, u, i, center,
 dl, dt, dd, ol, ul, li, fieldset, form, label, table, tr, th, td, article, footer, header, nav {
 	margin: 16px;
 	padding: 6px;
-	border: 1px solid #666;
+	/* border: 1px solid #666; */
 	font: inherit;
 	vertical-align: baseline;
 }
@@ -96,8 +96,17 @@ header {
 	padding: 0;
 	display: flex;
 	flex-flow: column nowrap;
-	background-color: darkslategray;
 }
+
+/* #profile {
+	margin: 16px 0 0 8px;
+	width: 74%;
+	background: rgb(247,225,116);
+	background: linear-gradient(90deg, rgba(247,225,116,1) 41%, rgba(246,211,43,1) 100%);
+	display: inline-block;
+	vertical-align: top;
+	border-radius: 3px;
+} */
 
 #team-container {
 	margin: 0;
@@ -105,12 +114,14 @@ header {
 	display: flex;
 	flex-flow: row wrap;
 	justify-content: center;
-	background-color: #222;
+	background-color: #2a75bb;
+	border-radius: 3px;
+	border: 8px outset #3c5aa6;;
 }
 
 .members {
 	padding: 7px;
-	background-color: #2a75bb;
+	background-color: #333;
 	display: flex;
 	flex-flow: column nowrap;
 	align-items: center;
@@ -142,8 +153,16 @@ header {
 }
 
 #how-to {
-	background-color: #222;
+	background-color: #333;
+	border-radius: 3px;
+	border: 1px solid #444;
 }
+
+/* h3 {
+	margin: 0;
+	border: 0;
+	padding: 0;
+} */
 
 #selector {
 	width: 226px;
