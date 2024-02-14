@@ -79,21 +79,17 @@ const getSpecies = (species) => {
         .catch(err => console.error(err))
 }
 
-// const makePokeListDraggable = ()
-
-    //   fetch(pokeListObj.url) // Fetch the detailed Pokémon data
+//     fetch(pokeListObj.url) // Fetch the detailed Pokémon data
 //     .then(response => {
 //       if (!response.ok) throw new Error('Failed to fetch Pokémon details')
 //       return response.json()
 //     })
-    // .then(details => {
-    // )
-    // .catch(error => console.error('Error fetching Pokémon details:', error))
+//     .then(details => {
+//     )
+//     .catch(error => console.error('Error fetching Pokémon details:', error))
 // }
 
 // Populates initial list of pokemon, responsible for displaying after filtering / searching
-
-
 const displayAllPokemon = (eachPoke) => {
     const li = document.createElement('li')
     li.innerText = eachPoke.name
