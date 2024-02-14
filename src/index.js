@@ -87,7 +87,7 @@ const displayAllPokemon = (list) => {
       li.innerText = list.name
       li.id = list.url
       resultsList.appendChild(li)
-    //   handleClick passes 'details' which is the return of the specific poke call
+    //!   handleClick passes 'details' which is the return of the specific poke call
       li.addEventListener('click', e => handleClick(e))
       li.setAttribute('draggable', true)
       li.setAttribute('poke-data', list.name) // set name for drag-and-drop
@@ -209,6 +209,7 @@ const reset = () => {
     abilityArray = []
 }
 
+// Use data from second fetch call for specific poke data
 const displayProfile = (pokeInfoObj) => {
     profileWrapper.id = 'profile-wrapper'
     profileWrapper.setAttribute('poke-data', pokeInfoObj.name)
@@ -256,6 +257,28 @@ const displayProfile = (pokeInfoObj) => {
     return getSpecies(species)
 }
 
+// use data from species-specific endpoint and append everything to display profile
+const displaySpeciesDetail = (speciesObj) => {
+    // get flavor text, remove line breaks, set text
+    flavor = speciesObj.flavor_text_entries[1].flavor_text
+    const removeLineBreaks = flavor.split('\n')
+    const flavorClean = removeLineBreaks.join(' ')
+    flavorText.innerText = flavorClean
+    flavorText.id = 'flavor-text'
+
+    // set growth rate
+    growthLabel.innerText = 'Growth Rate:'
+    growthLabel.className = 'column'
+    growthValue.innerText = speciesObj.growth_rate.name
+    growthRow.append(growthLabel, growthValue)
+
+    // nest and show
+    stats.append(abilityRow, heightRow, weightRow, growthRow)
+    profileHeader.append(name, id)
+    profileWrapper.append(img, profileHeader, flavorText, stats)
+    profile.append(profileWrapper)
+}
+
 //drag and drop event handlers
 const handleDragStart = e => {
     const data = {
@@ -279,27 +302,6 @@ const handleDrop = e => {
     } {
         console.error("Invalid slot")
 }}
-
-const displaySpeciesDetail = (speciesObj) => {
-    // get flavor text, remove line breaks, set text
-    flavor = speciesObj.flavor_text_entries[1].flavor_text
-    const removeLineBreaks = flavor.split('\n')
-    const flavorClean = removeLineBreaks.join(' ')
-    flavorText.innerText = flavorClean
-    flavorText.id = 'flavor-text'
-
-    // set growth rate
-    growthLabel.innerText = 'Growth Rate:'
-    growthLabel.className = 'column'
-    growthValue.innerText = speciesObj.growth_rate.name
-    growthRow.append(growthLabel, growthValue)
-
-    // nest and show
-    stats.append(abilityRow, heightRow, weightRow, growthRow)
-    profileHeader.append(name, id)
-    profileWrapper.append(img, profileHeader, flavorText, stats)
-    profile.append(profileWrapper)
-}
 
 // ! Start app logic on load
 const startTeamBuilder = () => {
