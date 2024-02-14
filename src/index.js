@@ -316,19 +316,16 @@ const handleDragEnter = e => {
 }
 
 const handleDrop = e => {
-    e.preventDefault()
-    //debugger
-    const { name, imageUrl, detailUrl } = JSON.parse(e.dataTransfer.getData('application/json'))
-    
-    const slotIndex = parseInt(e.target.getAttribute('data-index'), 10)
+    e.preventDefault();
+    const { name, imageUrl, detailUrl } = JSON.parse(e.dataTransfer.getData('application/json'));
+    const slotIndex = parseInt(e.target.getAttribute('data-index'), 10); // identify team slot
 
     if (slotIndex >= 0 && slotIndex < teamArray.length) {
-        teamArray[slotIndex] = { name, imageUrl, detailUrl } // store name, imageUrl, detailUrl
-        updateTeamUI() // invoke to update UI with name/images and stored detailUrl
-    } else {
-        console.error("Invalid slot")
-    }
-}
+        teamArray[slotIndex] = { name, imageUrl, detailUrl }; // place initial or overwrite pokemon at this index
+        updateTeamUI(); 
+    } {
+        console.error("Invalid slot");
+  }}
 
 const displaySpeciesDetail = (speciesObj) => {
     // get flavor text, remove line breaks, set text
