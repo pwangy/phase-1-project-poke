@@ -72,7 +72,9 @@ const displayAllPokemon = (pokeListObj) => {
       li.setAttribute('draggable', true)
       li.setAttribute('poke-data', details.name) // set name for drag-and-drop
       li.setAttribute('img-src', details.sprites.front_default) // set img-src for drag and drop
+      li.setAttribute('detail-url', pokeListObj.url) //store id for drag and drop
       li.addEventListener('dragstart', handleDragStart)
+      
     })
     .catch(error => console.error('Error fetching Pokémon details:', error))
 }
@@ -134,7 +136,7 @@ const searchByName = (searchName) => {
             .catch(err => console.error(err))
 })
 }
-                      
+                    
 // Searched Name Display Function
 const renderSearchedName = (searchName) => {
     const searchResult = document.createElement('li')
@@ -172,9 +174,18 @@ const updateTeamUI = () => {
             const nameElement = document.createElement('p')
             nameElement.textContent = pokemon.name // set pokemon name
             member.appendChild(nameElement) // append name to slot
+
+             //add click event listener to members
+            member.addEventListener('click', () => handleClickTeam(pokemon.detailUrl))
         }
     })
 }
+// new version of handleClick that works with team container
+const handleClickTeam = (detailUrl) => {
+    reset()
+    currentPoke = detailUrl //sets specific pokemon's url
+    return getSpecificPoke(currentPoke)
+  }
 
 //! Display pokemon profile
 // Reset and clear profile before loading another
@@ -211,6 +222,7 @@ const displayProfile = (pokeInfoObj) => {
     profileWrapper.id = 'profile-wrapper'
     profileWrapper.setAttribute('poke-data', pokeInfoObj.name)
     profileWrapper.setAttribute('img-src', img.src = pokeInfoObj.sprites.front_default)
+    profileWrapper.setAttribute('detail-url', currentPoke)
     profileWrapper.setAttribute('draggable', true)
     profileWrapper.addEventListener('dragstart', handleDragStart)
 
@@ -272,9 +284,10 @@ const getSpecies = (species) => {
 const handleDragStart = e => {
     const data = {
         name: e.target.getAttribute('poke-data'), 
-        imageUrl: e.target.getAttribute('img-src')
+        imageUrl: e.target.getAttribute('img-src'),
+        detailUrl: e.target.getAttribute('detail-url'),
     }
-    e.dataTransfer.setData('application/json', JSON.stringify(data)) // package and set both name and URL
+    e.dataTransfer.setData('application/json', JSON.stringify(data)) // package and set name, imageUrl, detailUrl
 }
 
 const handleDragOver = e => {
@@ -287,12 +300,14 @@ const handleDragEnter = e => {
 
 const handleDrop = e => {
     e.preventDefault()
-    const { name, imageUrl } = JSON.parse(e.dataTransfer.getData('application/json'))
+    //debugger
+    const { name, imageUrl, detailUrl } = JSON.parse(e.dataTransfer.getData('application/json'))
+    
     const slotIndex = parseInt(e.target.getAttribute('data-index'), 10)
 
     if (slotIndex >= 0 && slotIndex < teamArray.length) {
-        teamArray[slotIndex] = { name, imageUrl } // store both name and image URL
-        updateTeamUI() // invoke to update UI with name/images
+        teamArray[slotIndex] = { name, imageUrl, detailUrl } // store name, imageUrl, detailUrl
+        updateTeamUI() // invoke to update UI with name/images and stored detailUrl
     } else {
         console.error("Invalid slot")
     }
