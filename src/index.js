@@ -45,7 +45,6 @@ const getPokemon = () => {
         .then(allPokeList => {
             allPokeList.results.forEach(pokemon => displayAllPokemon(pokemon))
             allPokeArray = allPokeList.results
-            // allPokeList.results.forEach(pokemon => getSpecificPoke(pokemon))
         })
         .catch(err => console.error(err))
 }
@@ -58,11 +57,10 @@ const getSpecificPoke = (currentPoke) => {
         }
         throw res.statusText
     })
-    .then(pokeInfoObj => {
-        specificPokeInfo = pokeInfoObj
-        return pokeInfoObj
+    .then(pokeInfo => {
+        specificPokeInfo = pokeInfo
+        return pokeInfo
     })
-    
     .catch(err => console.error(err))
 }
 
@@ -74,40 +72,30 @@ const getSpecies = (species) => {
             }
             throw res.statusText
         })
-        .then(speciesObj => {
-            displaySpeciesDetail(speciesObj)
+        .then(speciesInfo => {
+            displaySpeciesDetail(speciesInfo)
         })
         .catch(err => console.error(err))
 }
 
-//     fetch(pokeListObj.url) // Fetch the detailed Pokémon data
-//     .then(response => {
-//       if (!response.ok) throw new Error('Failed to fetch Pokémon details')
-//       return response.json()
-//     })
-//     .then(details => {
-//     )
-//     .catch(error => console.error('Error fetching Pokémon details:', error))
-// }
-
-// Populates initial list of pokemon, responsible for displaying after filtering / searching
+// Populates initial list of pokemon, filter and search results get sent here
 const displayAllPokemon = (eachPoke) => {
     const li = document.createElement('li')
     li.innerText = eachPoke.name
     li.id = eachPoke.url
     li.addEventListener('click', e => handleClick(e))
     li.setAttribute('draggable', true)
-    li.setAttribute('poke-data', eachPoke.name) // set name for drag-and-drop
+    li.setAttribute('poke-data', eachPoke.name)
     li.addEventListener('dragstart', handleDragStart)
-    currentPoke = eachPoke.url
-    // something that calls
-        getPokemon(currentPoke)
-        .then(pokeInfoObj => {
-            debugger
-            li.setAttribute('img-src', pokeInfoObj.sprites.front_default) // set img-src for drag and drop
-            resultsList.appendChild(li)
-        })
+    resultsList.appendChild(li)
 }
+// ! move to either handleDragStart or handleDrop 
+// currentPoke = eachPoke.url
+//     getPokemon(currentPoke)
+//     .then(pokeInfo => {
+//         debugger
+//         li.setAttribute('img-src', pokeInfo.sprites.front_default) // set img-src for drag and drop
+//     })
 
 // <!---- FILTER FUNCTIONALITY ---->
 // 1. Filter Event Listener
@@ -166,9 +154,9 @@ const handleClick = (e) => {
     reset()
     currentPoke = e.target.id //sets specific pokemon's url
     return getSpecificPoke(currentPoke)
-        .then(pokeInfoObj => {
-            debugger
-        displayProfile(pokeInfoObj)
+        .then(pokeInfo => {
+            // debugger
+        displayProfile(pokeInfo)
     })
 }
 
@@ -217,27 +205,27 @@ const reset = () => {
 }
 
 // Use data from second fetch call for specific poke data
-const displayProfile = (pokeInfoObj) => {
+const displayProfile = (pokeInfo) => {
     profileWrapper.id = 'profile-wrapper'
-    profileWrapper.setAttribute('poke-data', pokeInfoObj.name)
-    profileWrapper.setAttribute('img-src', img.src = pokeInfoObj.sprites.front_default)
+    profileWrapper.setAttribute('poke-data', pokeInfo.name)
+    profileWrapper.setAttribute('img-src', img.src = pokeInfo.sprites.front_default)
     profileWrapper.setAttribute('draggable', true)
     profileWrapper.addEventListener('dragstart', handleDragStart)
 
     // set image, name, pokedex number
-    img.src = pokeInfoObj.sprites.other.dream_world.front_default
+    img.src = pokeInfo.sprites.other.dream_world.front_default
     img.setAttribute('draggable', false)
-    const setName = pokeInfoObj.name
+    const setName = pokeInfo.name
     const capFirstLetter = setName[0].toUpperCase()
-    img.alt = pokeInfoObj.name
+    img.alt = pokeInfo.name
     name.innerText = `${capFirstLetter}${setName.slice(1)}`
     name.id = 'display-name'
-    id.innerText = `#${pokeInfoObj.id}`
+    id.innerText = `#${pokeInfo.id}`
 
     // list abilities
     abilityLabel.innerText = 'Abilities:'
     abilityLabel.className = 'column'
-    const abilityObj = pokeInfoObj.abilities
+    const abilityObj = pokeInfo.abilities
     const abilityArray = []
     const abilityCount = abilityObj.length
     for (let i = 0; i < abilityCount; i++ ) {
@@ -249,25 +237,25 @@ const displayProfile = (pokeInfoObj) => {
     // set height
     heightLabel.innerText = 'Height:'
     heightLabel.className = 'column'
-    heightValue.innerText = pokeInfoObj.height
+    heightValue.innerText = pokeInfo.height
     heightRow.append(heightLabel, heightValue)
    
     // set weight
     weightLabel.innerText = 'Weight:'
     weightLabel.className = 'column'
-    weightValue.innerText = pokeInfoObj.weight
+    weightValue.innerText = pokeInfo.weight
     weightRow.append(weightLabel, weightValue)
   
     // fetch flavor text and growth info from Species endpoint
     let species = ''
-    species = pokeInfoObj.species.url
+    species = pokeInfo.species.url
     return getSpecies(species)
 }
 
 // use data from species-specific endpoint and append everything to display profile
-const displaySpeciesDetail = (speciesObj) => {
+const displaySpeciesDetail = (speciesInfo) => {
     // get flavor text, remove line breaks, set text
-    flavor = speciesObj.flavor_text_entries[1].flavor_text
+    flavor = speciesInfo.flavor_text_entries[1].flavor_text
     const removeLineBreaks = flavor.split('\n')
     const flavorClean = removeLineBreaks.join(' ')
     flavorText.innerText = flavorClean
@@ -276,7 +264,7 @@ const displaySpeciesDetail = (speciesObj) => {
     // set growth rate
     growthLabel.innerText = 'Growth Rate:'
     growthLabel.className = 'column'
-    growthValue.innerText = speciesObj.growth_rate.name
+    growthValue.innerText = speciesInfo.growth_rate.name
     growthRow.append(growthLabel, growthValue)
 
     // nest and show
