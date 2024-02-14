@@ -311,7 +311,7 @@ const handleDrop = e => {
         teamArray[slotIndex] = { name, imageUrl, detailUrl } // store name, imageUrl, detailUrl
         updateTeamUI() // invoke to update UI with name/images and stored detailUrl
     } else {
-        console.error("Invalid slot")
+        alert("Invalid slot")
     }
 }
 
