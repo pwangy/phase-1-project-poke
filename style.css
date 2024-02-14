@@ -106,7 +106,6 @@ header {
 	flex-flow: row wrap;
 	justify-content: center;
 	background-color: #222;
-	/* background-color: darkolivegreen; */
 }
 
 .members {
@@ -143,13 +142,49 @@ header {
 }
 
 #how-to {
-	background-color: darkblue;
+	background-color: #222;
 }
 
 #selector {
-	width: 25%;
-	background-color: #3d3d5c;
+	width: 226px;
 	display: inline-block
+}
+
+#filter-search {
+	margin-bottom: 0;
+}
+
+form {
+	margin: 8px 0 0 0;
+	padding: 0;
+	border: none;
+	display: flex;
+	flex-flow: row nowrap;
+}
+
+#filter {
+	width: 110px;
+}
+
+#search {
+	width: 110px;
+}
+
+#pokemon-list {
+	max-height: 600px;
+	overflow-y: auto;
+	background-color: #333;
+	border-radius: 3px;
+	border: 1px solid #444;
+}
+
+#pokemon-list li {
+	margin: 0;
+	padding: 0 0 4px 0;
+	text-transform: capitalize;
+	font-size: small;
+	letter-spacing: 0.05rem;
+	border: none;
 }
 
 #profile {
@@ -188,7 +223,6 @@ hgroup {
 	display: flex;
 	flex-flow: row nowrap;
 	align-items: center;
-	/* background-color: aquamarine; */
 }
 
 #display-name {
@@ -230,7 +264,6 @@ footer {
 	margin-bottom: 0;
 	font-size: smaller;
 	border: none;
-	/* background-color: slateblue; */
 }
 
 footer p {

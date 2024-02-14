@@ -27,30 +27,24 @@
             <div class="members" data-index="4">5</div>
             <div class="members" data-index="5">6</div>
         </div>
-        <div id="how-to"><h3>hi! get started by selecting a pokemon!</h3></div> 
+        <div id="how-to">
+            <h3>Embark on an adventure through our first-generation Pokemon database! Delve into each Pokemon's traits and forge a formidable team of six for epic battles. Drag and drop your Pokemon to the top of the page to get started.</h3>
+        </div> 
         <!-- space for div w/ directions to drag and drop pokemon to build yr team- -->
     </section>
     <section id="selector">
-        <!-- drop down filters -->
-        <div id="filter-container">
-            <h3 >FILTER POK&#201;MON</h3>
-            <div id="filterBox">
-                <select name="filter" id="filter">
-                    <option value="default">Filter</option>
-                    <option value="azByName">A-Z by Name</option>
-                    <option value="zaByName">Z-A by Name</option>
-                </select>
-            </div>
-        </div>
-        <!-- search bar -->
-        <div id="searchBar">
-            <h3>SEARCH POK&#201;MON</h3>
+        <div id="filter-search">
+            <select name="filter" id="filter">
+                <option value="default">Filter</option>
+                <option value="azByName">A-Z by Name</option>
+                <option value="zaByName">Z-A by Name</option>
+            </select>
             <form>
-                <input type="search" id="search" name="search" placeholder="Search for Pok&#233;mon">
+                <input type="search" id="search" name="search" placeholder="e.g. Pikachu">
                 <input type="submit" id="submitSearch" value="SEARCH">
             </form>
         </div>
-        <ul id="pokemon-list"></ul>
+            <ul id="pokemon-list"></ul>
     </section>
     <section id="profile"></section>
     <footer>
