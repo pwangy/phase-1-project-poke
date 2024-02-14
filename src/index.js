@@ -61,7 +61,21 @@ const getSpecificPoke = (currentPoke) => {
     .catch(err => console.error(err))
 }
 
-// DISPLAY FUNCTIONS
+const getSpecies = (species) => {
+    return fetch(species)
+        .then(res => {
+            if (res.ok) {
+                return res.json()
+            }
+            throw res.statusText
+        })
+        .then(speciesObj => {
+            displaySpeciesDetail(speciesObj)
+        })
+        .catch(err => console.error(err))
+}
+
+// Populates initial list of pokemon, responsible for displaying after filtering / searching
 const displayAllPokemon = (list) => {
 //   fetch(pokeListObj.url) // Fetch the detailed Pokémon data
 //     .then(response => {
@@ -240,20 +254,6 @@ const displayProfile = (pokeInfoObj) => {
     let species = ''
     species = pokeInfoObj.species.url
     return getSpecies(species)
-}
-
-const getSpecies = (species) => {
-    return fetch(species)
-        .then(res => {
-            if (res.ok) {
-                return res.json()
-            }
-            throw res.statusText
-        })
-        .then(speciesObj => {
-            displaySpeciesDetail(speciesObj)
-        })
-        .catch(err => console.error(err))
 }
 
 //drag and drop event handlers
