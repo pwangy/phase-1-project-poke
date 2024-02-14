@@ -44,6 +44,8 @@ const getPokemon = () => {
         .catch(err => console.error(err))
 }
 
+
+
 const getPokemons = () => {
     return fetch(`${pokeAPI}pokemon/`)
         .then(res => {
@@ -90,12 +92,15 @@ filter.addEventListener('change', e => {
 // 2. Filter Click Handler
 const handleFilterChange = (filterName) => {
     resultsList.innerHTML = ""
-    if (filterName === "alphabeticalByName") {
+    if (filterName === "azByName") {
         getPokemons().then((allPokeList) => {filterByAZ(allPokeList)})
     }
+    if (filterName === "zaByName") {
+        getPokemons().then((allPokeList) => {filterByZA(allPokeList)})
+}
 }
 
-// 3. Filter Array of Pokemon Alphabetically
+// 3. Filter Array of Pokemon A to Z
 const filterByAZ = (allPokeList) => {
     const sortedList = [...allPokeList]
     sortedList.sort((a, b) => {
@@ -105,6 +110,18 @@ const filterByAZ = (allPokeList) => {
     })
     renderFilteredNames(sortedList)
 }
+
+// 3. Filter Array of Pokemon Z to A
+const filterByZA = (allPokeList) => {
+    const sortedList = [...allPokeList]
+    sortedList.sort((a, b) => {
+      //localeCompare() method returns a negative value if a should be sorted before b, 
+      //a positive value if a should be sorted after b, and 0 if they are equal   
+      return b.name.localeCompare(a.name)  
+    })
+    renderFilteredNames(sortedList)
+}
+
 
 // 4. Filter Display Function --> Same as function below used for Search
 const renderFilteredNames = (sortedList) => {
@@ -148,8 +165,6 @@ const renderSearchedName = (searchName) => {
 const handleClick = (e, pokeListObj) => {
   reset()
   currentPoke = e.target.id //sets specific pokemon's url
-  const bg = ['../assets/bg/01.png', '../assets/bg/02.png', '../assets/bg/03.png', '../assets/bg/04.png']
-  profileWrapper.style.backgroundImage = 'url('+ bg[Math.floor(Math.random() * bg.length)] + ')'
   return getSpecificPoke(currentPoke)
 }
 
@@ -308,10 +323,9 @@ const handleDrop = e => {
     if (slotIndex >= 0 && slotIndex < teamArray.length) {
         teamArray[slotIndex] = { name, imageUrl, detailUrl }; // place initial or overwrite pokemon at this index
         updateTeamUI(); 
-    } else {
+    } {
         console.error("Invalid slot");
-    }
-}
+  }}
 
 const displaySpeciesDetail = (speciesObj) => {
     // get flavor text, remove line breaks, set text
