@@ -78,7 +78,6 @@ const getSpecies = (species) => {
         .catch(err => console.error(err))
 }
 
-
 // Populates initial list of pokemon, filter and search results get sent here
 const displayAllPokemon = (eachPoke) => {
     const li = document.createElement('li')
@@ -90,13 +89,6 @@ const displayAllPokemon = (eachPoke) => {
     li.addEventListener('dragstart', handleDragStart)
     resultsList.appendChild(li)
 }
-// ! move to either handleDragStart or handleDrop 
-// currentPoke = eachPoke.url
-//     getPokemon(currentPoke)
-//     .then(pokeInfo => {
-//         debugger
-//         li.setAttribute('img-src', pokeInfo.sprites.front_default) // set img-src for drag and drop
-//     })
 
 // <!---- FILTER FUNCTIONALITY ---->
 // 1. Filter Event Listener
@@ -314,17 +306,15 @@ const handleDragOver = e => e.preventDefault()
 const handleDragEnter = e => e.preventDefault()
 
 const handleDrop = e => {
-    e.preventDefault()
-    //debugger
-    const { name, imageUrl, detailUrl } = JSON.parse(e.dataTransfer.getData('application/json'))
-    
-    const slotIndex = parseInt(e.target.getAttribute('data-index'), 10)
+    e.preventDefault();
+    const { name, imageUrl, detailUrl } = JSON.parse(e.dataTransfer.getData('application/json'));
+    const slotIndex = parseInt(e.target.getAttribute('data-index'), 10); // identify team slot
 
     if (slotIndex >= 0 && slotIndex < teamArray.length) {
         teamArray[slotIndex] = { name, imageUrl, detailUrl } // store name, imageUrl, detailUrl
         updateTeamUI() // invoke to update UI with name/images and stored detailUrl
     } else {
-        console.error("Invalid slot")
+        alert('Invalid slot')
 }}
 
 // ! Start app logic on load
