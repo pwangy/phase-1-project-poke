@@ -90,12 +90,15 @@ filter.addEventListener('change', e => {
 // 2. Filter Click Handler
 const handleFilterChange = (filterName) => {
     resultsList.innerHTML = ""
-    if (filterName === "alphabeticalByName") {
+    if (filterName === "azByName") {
         getPokemons().then((allPokeList) => {filterByAZ(allPokeList)})
     }
+    if (filterName === "zaByName") {
+        getPokemons().then((allPokeList) => {filterByZA(allPokeList)})
+}
 }
 
-// 3. Filter Array of Pokemon Alphabetically
+// 3. Filter Array of Pokemon A to Z
 const filterByAZ = (allPokeList) => {
     const sortedList = [...allPokeList]
     sortedList.sort((a, b) => {
@@ -105,6 +108,18 @@ const filterByAZ = (allPokeList) => {
     })
     renderFilteredNames(sortedList)
 }
+
+// 3. Filter Array of Pokemon Z to A
+const filterByZA = (allPokeList) => {
+    const sortedList = [...allPokeList]
+    sortedList.sort((a, b) => {
+      //localeCompare() method returns a negative value if a should be sorted before b, 
+      //a positive value if a should be sorted after b, and 0 if they are equal   
+      return b.name.localeCompare(a.name)  
+    })
+    renderFilteredNames(sortedList)
+}
+
 
 // 4. Filter Display Function --> Same as function below used for Search
 const renderFilteredNames = (sortedList) => {
