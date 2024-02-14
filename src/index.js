@@ -51,7 +51,7 @@ const getPokemon = () => {
 }
 
 const getSpecificPoke = (currentPoke) => {
-    fetch(currentPoke)
+    return fetch(currentPoke)
     .then(res => {
         if (res.ok) {
             return res.json()
@@ -59,9 +59,10 @@ const getSpecificPoke = (currentPoke) => {
         throw res.statusText
     })
     .then(pokeInfoObj => {
-        displayProfile(pokeInfoObj)
         specificPokeInfo = pokeInfoObj
+        return pokeInfoObj
     })
+    
     .catch(err => console.error(err))
 }
 
@@ -97,16 +98,15 @@ const displayAllPokemon = (eachPoke) => {
     li.addEventListener('click', e => handleClick(e))
     li.setAttribute('draggable', true)
     li.setAttribute('poke-data', eachPoke.name) // set name for drag-and-drop
+    li.addEventListener('dragstart', handleDragStart)
     currentPoke = eachPoke.url
     // something that calls
-    // getPokemon(currentPoke)
-        // console.log(currentPoke)
-        // console.log(specificPokeInfo)
-    // then sets the attribute
-        // li.setAttribute('img-src', specificPokeInfo.results.sprites.front_default) // set img-src for drag and drop        
-    // }
-    li.addEventListener('dragstart', handleDragStart)
-    resultsList.appendChild(li)
+        getPokemon(currentPoke)
+        .then(pokeInfoObj => {
+            debugger
+            li.setAttribute('img-src', pokeInfoObj.sprites.front_default) // set img-src for drag and drop
+            resultsList.appendChild(li)
+        })
 }
 
 // <!---- FILTER FUNCTIONALITY ---->
@@ -166,6 +166,10 @@ const handleClick = (e) => {
     reset()
     currentPoke = e.target.id //sets specific pokemon's url
     return getSpecificPoke(currentPoke)
+        .then(pokeInfoObj => {
+            debugger
+        displayProfile(pokeInfoObj)
+    })
 }
 
 // Drag and Drop stuff
