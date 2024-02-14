@@ -136,7 +136,7 @@ const searchByName = (searchName) => {
             .catch(err => console.error(err))
 })
 }
-                      
+                    
 // Searched Name Display Function
 const renderSearchedName = (searchName) => {
     const searchResult = document.createElement('li')
@@ -178,13 +178,11 @@ const updateTeamUI = () => {
             member.appendChild(nameElement) // append name to slot
 
              //add click event listener to members
-            //const detailElement = ''
-
             member.addEventListener('click', () => handleClickTeam(pokemon.detailUrl))
         }
     })
 }
-
+// new version of handleClick that works with team container
 const handleClickTeam = (detailUrl) => {
     reset()
     currentPoke = detailUrl //sets specific pokemon's url
@@ -293,7 +291,7 @@ const handleDragStart = e => {
         imageUrl: e.target.getAttribute('img-src'),
         detailUrl: e.target.getAttribute('detail-url'),
     }
-    e.dataTransfer.setData('application/json', JSON.stringify(data)) // package and set both name and URL
+    e.dataTransfer.setData('application/json', JSON.stringify(data)) // package and set name, imageUrl, detailUrl
 }
 
 const handleDragOver = e => {
@@ -312,8 +310,8 @@ const handleDrop = e => {
     const slotIndex = parseInt(e.target.getAttribute('data-index'), 10)
 
     if (slotIndex >= 0 && slotIndex < teamArray.length) {
-        teamArray[slotIndex] = { name, imageUrl, detailUrl } // store both name and image URL
-        updateTeamUI() // invoke to update UI with name/images
+        teamArray[slotIndex] = { name, imageUrl, detailUrl } // store name, imageUrl, detailUrl
+        updateTeamUI() // invoke to update UI with name/images and stored detailUrl
     } else {
         console.error("Invalid slot")
     }
