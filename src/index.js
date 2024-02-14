@@ -146,8 +146,6 @@ const renderSearchedName = (searchName) => {
 const handleClick = (e, pokeListObj) => {
   reset()
   currentPoke = e.target.id //sets specific pokemon's url
-  const bg = ['../assets/bg/01.png', '../assets/bg/02.png', '../assets/bg/03.png', '../assets/bg/04.png']
-  profileWrapper.style.backgroundImage = 'url('+ bg[Math.floor(Math.random() * bg.length)] + ')'
   return getSpecificPoke(currentPoke)
 }
 
