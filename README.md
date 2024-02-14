@@ -6,17 +6,9 @@ Ever wanted a place to keep track of your Pok&#233;mon team roster? Search for P
 Pok&#233;mon Team Builder was built by Steph Bertram, Sung-Jin Ahn, and Peggy Wang for educational purposes as part of Flatiron School's Software Engineering bootcamp.
 
 
-## Installation
-How to get this app up and running
+## Try it out
+[Pok&#233;mon Team Builder](https://pwangy.github.io/phase-1-project-poke/)
 
-
-## Usage
-```python
-import foobar
-
-# returns 'words'
-foobar.pluralize('word')
-```
 
 ## Deliverables
 - [x] Your app must be a HTML/CSS/JS frontend that accesses data from a public API or from a db.json file using json-server.
@@ -35,10 +27,10 @@ User will be able to:
 - [x] Add a Pokemon to their team via drag and drop functionality
   
 Stretch:
+- [x] Additional/More complex filtering capabilities
 - [ ] Edit your team
 - [ ] Additional arrays of teams (a, b, wishlist, bench, etc)
 - [ ] Cookies/ local storage to persist team for individual users
-- [x] Additional/More complex filtering capabilities
 
 
 ## License
