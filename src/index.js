@@ -28,6 +28,7 @@ const growthValue = document.createElement('td')
 
 let allPokeArray = []
 let sortedList = []
+let searchedList = []
 const teamArray = [null, null, null, null, null, null]
 let currentPoke = ''
 
@@ -86,13 +87,13 @@ const displayAllPokemon = (list) => {
       const li = document.createElement('li')
       li.innerText = list.name
       li.id = list.url
-      resultsList.appendChild(li)
-    //!   handleClick passes 'details' which is the return of the specific poke call
+      //!   handleClick passes 'details' which is the return of the specific poke call
       li.addEventListener('click', e => handleClick(e))
       li.setAttribute('draggable', true)
       li.setAttribute('poke-data', list.name) // set name for drag-and-drop
-    //   li.setAttribute('img-src', details.sprites.front_default) // set img-src for drag and drop
+      //   li.setAttribute('img-src', details.sprites.front_default) // set img-src for drag and drop
       li.addEventListener('dragstart', handleDragStart)
+      resultsList.appendChild(li)
     }
     // )
     // .catch(error => console.error('Error fetching Pokémon details:', error))
@@ -102,7 +103,6 @@ const displayAllPokemon = (list) => {
 // 1. Filter Event Listener
 filter.addEventListener('change', e => {
     // need e.preventDefault()?
-    // console.log(e.target.value)
     handleFilterChange(e.target.value)
 })
 
@@ -132,7 +132,7 @@ const renderFilteredNames = (sortedList) => {
 }
 
 // <!---- SEARCH FUNCTIONALITY ---->
-// Search Event Listener
+// 1. Search Event Listener
 searchFormSubmit.addEventListener('submit', e => {
     e.preventDefault()
     searchByName(e.target.search.value)
@@ -141,20 +141,13 @@ searchFormSubmit.addEventListener('submit', e => {
 // 2. Search Input Function
 const searchByName = (searchName) => {
     resultsList.innerHTML = ''
-    allPoke.forEach(pokemon => {
+    allPokeArray.forEach(pokemon => {
         const lowercaseName = searchName.toLowerCase()
         if (pokemon.name.includes(lowercaseName)) {
-            renderSearchedName(pokemon.name) 
+            searchedList.push(pokemon)
+            displayAllPokemon(pokemon)
         }
     })
-}
-
-//! need to direct this to displayAllPokemon
-// Searched Name Display Function
-const renderSearchedName = (searchName) => {
-    const searchResult = document.createElement('li')
-    searchResult.innerText = searchName
-    resultsList.append(searchResult)
 }
 
 // <!---- EVENT HANDLERS ---->
