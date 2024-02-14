@@ -26,7 +26,8 @@ const growthRow = document.createElement('tr')
 const growthLabel = document.createElement('td')
 const growthValue = document.createElement('td')
 
-let allPokeObj = []
+let allPokeArray = []
+let sortedList = []
 const teamArray = [null, null, null, null, null, null]
 let currentPoke = ''
 
@@ -41,15 +42,27 @@ const getPokemon = () => {
         })  
         .then(allPokeList => {
             allPokeList.results.forEach(pokemon => displayAllPokemon(pokemon))
-            allPokeObj = allPokeList.results
-            // console.log(allPokeObj)
-            // Object.values(allPokeObj)
+            allPokeArray = allPokeList.results
         })
         .catch(err => console.error(err))
 }
 
+const getSpecificPoke = (currentPoke) => {
+    fetch(currentPoke)
+    .then(res => {
+        if (res.ok) {
+            return res.json()
+        }
+        throw res.statusText
+    })
+    .then(pokeInfoObj => {
+        displayProfile(pokeInfoObj)
+    })
+    .catch(err => console.error(err))
+}
+
 // DISPLAY FUNCTIONS
-const displayAllPokemon = (pokeListObj) => {
+const displayAllPokemon = (list) => {
 //   fetch(pokeListObj.url) // Fetch the detailed Pokémon data
 //     .then(response => {
 //       if (!response.ok) throw new Error('Failed to fetch Pokémon details')
@@ -57,12 +70,13 @@ const displayAllPokemon = (pokeListObj) => {
 //     })
     // .then(details => {
       const li = document.createElement('li')
-      li.innerText = pokeListObj.name
-      li.id = pokeListObj.url
+      li.innerText = list.name
+      li.id = list.url
       resultsList.appendChild(li)
-    //   li.addEventListener('click', e => handleClick(e, details))
+    //   handleClick passes 'details' which is the return of the specific poke call
+      li.addEventListener('click', e => handleClick(e))
       li.setAttribute('draggable', true)
-      li.setAttribute('poke-data', pokeListObj.name) // set name for drag-and-drop
+      li.setAttribute('poke-data', list.name) // set name for drag-and-drop
     //   li.setAttribute('img-src', details.sprites.front_default) // set img-src for drag and drop
       li.addEventListener('dragstart', handleDragStart)
     }
@@ -75,23 +89,22 @@ const displayAllPokemon = (pokeListObj) => {
 filter.addEventListener('change', e => {
     // need e.preventDefault()?
     // console.log(e.target.value)
-    handleFilterChange(e.target.value)   
+    handleFilterChange(e.target.value)
 })
 
 // 2. Filter Click Handler
 const handleFilterChange = (filterName) => {
     resultsList.innerHTML = ''
     if (filterName === 'alphabeticalByName') {
-        filterByAZ(allPokeObj)
-    }}
+        filterByAZ(allPokeArray)
+}}
 
 // 3. Filter Array of Pokemon Alphabetically
 const filterByAZ = () => {
-// debugger
-    const sortedList = [...allPokeObj]
+    sortedList = [...allPokeArray]
     sortedList.sort((a, b) => {
       //localeCompare() method returns a negative value if a should be sorted before b, 
-      //a positive value if a should be sorted after b, and 0 if they are equal   
+      //a positive value if a should be sorted after b, and 0 if they are equal
       return a.name.localeCompare(b.name)  
     })
     renderFilteredNames(sortedList)
@@ -100,57 +113,51 @@ const filterByAZ = () => {
 // 4. Filter Display Function --> Same as function below used for Search
 const renderFilteredNames = (sortedList) => {
     sortedList.forEach(pokemon => {
-        const filterResult = document.createElement("li")
-        filterResult.innerText = pokemon.name
-        resultsList.append(filterResult)
-})
+        displayAllPokemon(pokemon)
+    })
 }
-    
+
 // <!---- SEARCH FUNCTIONALITY ---->
 // Search Event Listener
-
 searchFormSubmit.addEventListener('submit', e => {
     e.preventDefault()
     searchByName(e.target.search.value)
 })
 
 // 2. Search Input Function
-const searchByName = (searchName, allPokeList) => {
+const searchByName = (searchName) => {
     resultsList.innerHTML = ''
-    // getPokemons().then(allPokeList => {
-        allPokeList.forEach(pokemon => {
-            const lowercaseName = searchName.toLowerCase()
-            if (pokemon.name.includes(lowercaseName)) {
-                renderSearchedName(pokemon.name) 
-            }
-            })
-            .catch(err => console.error(err))
-// })
+    allPoke.forEach(pokemon => {
+        const lowercaseName = searchName.toLowerCase()
+        if (pokemon.name.includes(lowercaseName)) {
+            renderSearchedName(pokemon.name) 
+        }
+    })
 }
-                      
+
+//! need to direct this to displayAllPokemon
 // Searched Name Display Function
 const renderSearchedName = (searchName) => {
     const searchResult = document.createElement('li')
     searchResult.innerText = searchName
     resultsList.append(searchResult)
 }
-    
+
 // <!---- EVENT HANDLERS ---->
-const handleClick = (e, pokeListObj) => {
-  reset()
-  currentPoke = e.target.id //sets specific pokemon's url
-  const bg = ['../assets/bg/01.png', '../assets/bg/02.png', '../assets/bg/03.png', '../assets/bg/04.png']
-  profileWrapper.style.backgroundImage = 'url('+ bg[Math.floor(Math.random() * bg.length)] + ')'
-  return getSpecificPoke(currentPoke)
+const handleClick = (e) => {
+    // console.log(details)
+    reset()
+    currentPoke = e.target.id //sets specific pokemon's url
+    return getSpecificPoke(currentPoke)
 }
 
 // Drag and Drop stuff
 const setupDragDrop = () => {
     document.querySelectorAll('.members').forEach(member => {
-        member.addEventListener('dragover', handleDragOver);
-        member.addEventListener('dragenter', handleDragEnter);
-        member.addEventListener('drop', handleDrop);
-    });
+        member.addEventListener('dragover', handleDragOver)
+        member.addEventListener('dragenter', handleDragEnter)
+        member.addEventListener('drop', handleDrop)
+    })
 }
 
 // Update Container
@@ -186,20 +193,6 @@ const reset = () => {
     abilityRow.remove()
     growthRow.remove()
     abilityArray = []
-}
-
-const getSpecificPoke = (currentPoke) => {
-    fetch(currentPoke)
-    .then(res => {
-        if (res.ok) {
-            return res.json()
-        }
-        throw res.statusText
-    })  
-    .then(pokeInfoObj => {
-        displayProfile(pokeInfoObj)
-    })
-    .catch(err => console.error(err))
 }
 
 const displayProfile = (pokeInfoObj) => {
@@ -272,13 +265,8 @@ const handleDragStart = e => {
     e.dataTransfer.setData('application/json', JSON.stringify(data)) // package and set both name and URL
 }
 
-const handleDragOver = e => {
-    e.preventDefault()
-}
-
-const handleDragEnter = e => {
-    e.preventDefault()
-}
+const handleDragOver = e => e.preventDefault()
+const handleDragEnter = e => e.preventDefault()
 
 const handleDrop = e => {
     e.preventDefault()
@@ -288,10 +276,9 @@ const handleDrop = e => {
     if (slotIndex >= 0 && slotIndex < teamArray.length) {
         teamArray[slotIndex] = { name, imageUrl } // store both name and image URL
         updateTeamUI() // invoke to update UI with name/images
-    } else {
+    } {
         console.error("Invalid slot")
-    }
-}
+}}
 
 const displaySpeciesDetail = (speciesObj) => {
     // get flavor text, remove line breaks, set text
@@ -315,9 +302,9 @@ const displaySpeciesDetail = (speciesObj) => {
 }
 
 // ! Start app logic on load
-const loadStuff = () => {
+const startTeamBuilder = () => {
     getPokemon()
     setupDragDrop()
 }
 
-loadStuff()
+startTeamBuilder()
