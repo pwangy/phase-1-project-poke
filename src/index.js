@@ -29,6 +29,7 @@ const growthValue = document.createElement('td')
 let allPokeArray = []
 let sortedList = []
 let searchedList = []
+let specificPokeInfo = []
 const teamArray = [null, null, null, null, null, null]
 let currentPoke = ''
 
@@ -44,6 +45,7 @@ const getPokemon = () => {
         .then(allPokeList => {
             allPokeList.results.forEach(pokemon => displayAllPokemon(pokemon))
             allPokeArray = allPokeList.results
+            // allPokeList.results.forEach(pokemon => getSpecificPoke(pokemon))
         })
         .catch(err => console.error(err))
 }
@@ -58,6 +60,7 @@ const getSpecificPoke = (currentPoke) => {
     })
     .then(pokeInfoObj => {
         displayProfile(pokeInfoObj)
+        specificPokeInfo = pokeInfoObj
     })
     .catch(err => console.error(err))
 }
@@ -76,28 +79,39 @@ const getSpecies = (species) => {
         .catch(err => console.error(err))
 }
 
-// Populates initial list of pokemon, responsible for displaying after filtering / searching
-const displayAllPokemon = (list) => {
-//   fetch(pokeListObj.url) // Fetch the detailed Pokémon data
+// const makePokeListDraggable = ()
+
+    //   fetch(pokeListObj.url) // Fetch the detailed Pokémon data
 //     .then(response => {
 //       if (!response.ok) throw new Error('Failed to fetch Pokémon details')
 //       return response.json()
 //     })
     // .then(details => {
-      const li = document.createElement('li')
-      li.innerText = list.name
-      li.id = list.url
-      //!   handleClick passes 'details' which is the return of the specific poke call
-      li.addEventListener('click', e => handleClick(e))
-      li.setAttribute('draggable', true)
-      li.setAttribute('poke-data', list.name) // set name for drag-and-drop
-      //   li.setAttribute('img-src', details.sprites.front_default) // set img-src for drag and drop
-      li.addEventListener('dragstart', handleDragStart)
-      resultsList.appendChild(li)
-    }
     // )
     // .catch(error => console.error('Error fetching Pokémon details:', error))
 // }
+
+// Populates initial list of pokemon, responsible for displaying after filtering / searching
+
+
+const displayAllPokemon = (eachPoke) => {
+    const li = document.createElement('li')
+    li.innerText = eachPoke.name
+    li.id = eachPoke.url
+    li.addEventListener('click', e => handleClick(e))
+    li.setAttribute('draggable', true)
+    li.setAttribute('poke-data', eachPoke.name) // set name for drag-and-drop
+    currentPoke = eachPoke.url
+    // something that calls
+    // getPokemon(currentPoke)
+        // console.log(currentPoke)
+        // console.log(specificPokeInfo)
+    // then sets the attribute
+        // li.setAttribute('img-src', specificPokeInfo.results.sprites.front_default) // set img-src for drag and drop        
+    // }
+    li.addEventListener('dragstart', handleDragStart)
+    resultsList.appendChild(li)
+}
 
 // <!---- FILTER FUNCTIONALITY ---->
 // 1. Filter Event Listener
