@@ -26,6 +26,7 @@ const growthRow = document.createElement('tr')
 const growthLabel = document.createElement('td')
 const growthValue = document.createElement('td')
 
+let allPokeObj = []
 const teamArray = [null, null, null, null, null, null]
 let currentPoke = ''
 
@@ -40,42 +41,34 @@ const getPokemon = () => {
         })  
         .then(allPokeList => {
             allPokeList.results.forEach(pokemon => displayAllPokemon(pokemon))
+            allPokeObj = allPokeList.results
+            // console.log(allPokeObj)
+            // Object.values(allPokeObj)
         })
-        .catch(err => console.error(err))
-}
-
-const getPokemons = () => {
-    return fetch(`${pokeAPI}pokemon/`)
-        .then(res => {
-            if (res.ok) {
-                return res.json()
-            }
-            throw res.statusText
-        })  
-        .then(allPokeList => allPokeList.results)
         .catch(err => console.error(err))
 }
 
 // DISPLAY FUNCTIONS
 const displayAllPokemon = (pokeListObj) => {
-  fetch(pokeListObj.url) // Fetch the detailed Pokémon data
-    .then(response => {
-      if (!response.ok) throw new Error('Failed to fetch Pokémon details')
-      return response.json()
-    })
-    .then(details => {
+//   fetch(pokeListObj.url) // Fetch the detailed Pokémon data
+//     .then(response => {
+//       if (!response.ok) throw new Error('Failed to fetch Pokémon details')
+//       return response.json()
+//     })
+    // .then(details => {
       const li = document.createElement('li')
-      li.innerText = details.name
+      li.innerText = pokeListObj.name
       li.id = pokeListObj.url
       resultsList.appendChild(li)
-      li.addEventListener('click', e => handleClick(e, details))
+    //   li.addEventListener('click', e => handleClick(e, details))
       li.setAttribute('draggable', true)
-      li.setAttribute('poke-data', details.name) // set name for drag-and-drop
-      li.setAttribute('img-src', details.sprites.front_default) // set img-src for drag and drop
+      li.setAttribute('poke-data', pokeListObj.name) // set name for drag-and-drop
+    //   li.setAttribute('img-src', details.sprites.front_default) // set img-src for drag and drop
       li.addEventListener('dragstart', handleDragStart)
-    })
-    .catch(error => console.error('Error fetching Pokémon details:', error))
-}
+    }
+    // )
+    // .catch(error => console.error('Error fetching Pokémon details:', error))
+// }
 
 // <!---- FILTER FUNCTIONALITY ---->
 // 1. Filter Event Listener
@@ -87,15 +80,15 @@ filter.addEventListener('change', e => {
 
 // 2. Filter Click Handler
 const handleFilterChange = (filterName) => {
-    resultsList.innerHTML = ""
-    if (filterName === "alphabeticalByName") {
-        getPokemons().then((allPokeList) => {filterByAZ(allPokeList)})
-    }
-}
+    resultsList.innerHTML = ''
+    if (filterName === 'alphabeticalByName') {
+        filterByAZ(allPokeObj)
+    }}
 
 // 3. Filter Array of Pokemon Alphabetically
-const filterByAZ = (allPokeList) => {
-    const sortedList = [...allPokeList]
+const filterByAZ = () => {
+// debugger
+    const sortedList = [...allPokeObj]
     sortedList.sort((a, b) => {
       //localeCompare() method returns a negative value if a should be sorted before b, 
       //a positive value if a should be sorted after b, and 0 if they are equal   
@@ -122,9 +115,9 @@ searchFormSubmit.addEventListener('submit', e => {
 })
 
 // 2. Search Input Function
-const searchByName = (searchName) => {
+const searchByName = (searchName, allPokeList) => {
     resultsList.innerHTML = ''
-    getPokemons().then(allPokeList => {
+    // getPokemons().then(allPokeList => {
         allPokeList.forEach(pokemon => {
             const lowercaseName = searchName.toLowerCase()
             if (pokemon.name.includes(lowercaseName)) {
@@ -132,7 +125,7 @@ const searchByName = (searchName) => {
             }
             })
             .catch(err => console.error(err))
-})
+// })
 }
                       
 // Searched Name Display Function
