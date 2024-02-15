@@ -9,7 +9,6 @@ h1, h3, p, a, em, img, small, strike, strong, b, u, i, center, ul, li, fieldset,
 	font: inherit;
 	vertical-align: baseline;
 }
-/* HTML5 display-role reset for older browsers */
 ul, li {
 	list-style: none;
 }
@@ -34,16 +33,12 @@ html, #title-wrapper, #team-container, .members img, footer a {
 	margin: 0;
 }
 
-/* html, body, header, #poke-logo, #title-wrapper, #team-builder, .members, .members img, .members p, form, #pokemon-list li, #profile img, #display-name, #profile span, #profile p, footer, footer p, footer a  {
-	border: none;
-} */
-
 #how-to p, #pokemon-list, #filter-search {
 	border: 1px solid #444;
 	border-radius: 3px;
 }
 
-#team-container , .members, .members img, .members p, #profile, #profile-wrapper{
+#filter-search, #team-container , .members, .members img, .members p, #profile, #profile-wrapper{
 	border-radius: 3px;
 }
 
@@ -106,15 +101,17 @@ header {
 	display: flex;
 	flex-flow: row wrap;
 	justify-content: center;
-	background-color: #2a75bb;
-	/* border: 8px outset #3c5aa6;; */
+	border: 1px solid #3c5aa6;
 }
 
 .members {
 	padding: 7px;
 	display: flex;
 	flex-flow: column nowrap;
-	align-items: center;
+	color: #222;
+	background: rgb(247,225,116);
+	background: linear-gradient(90deg, rgba(247,225,116,1) 41%, rgba(246,211,43,1) 100%);
+	align-self: center;
 }
 
 .members img {
@@ -155,8 +152,12 @@ header {
 
 #filter-search {
 	margin-bottom: 0;
+	padding: 16px;
 	border: 1px solid #444;
-	/* border-radius: 3px; */
+}
+
+#filter {
+	width: 110px;
 }
 
 form {
@@ -166,16 +167,20 @@ form {
 	flex-flow: row nowrap;
 }
 
-#filter {
-	width: 110px;
-}
-
 #search {
 	width: 110px;
 }
 
+#submitSearch {
+	width: 50px;
+	padding: 0 0 3px 0;
+	font-size: small;
+	text-transform: lowercase;
+}
+
 #pokemon-list {
-	height: 627px;
+	height: 606px;
+	padding: 6px 16px;
 	overflow-y: auto;
 	scrollbar-color: #c7a008 #333;
 	--scrollbar-width-legacy: 0.5rem;
@@ -192,19 +197,20 @@ form {
 
 /* PROFILE */
 #profile {
-	margin: 16px 0 0 5px;
+	margin: 0;
+	padding: 0;
 	width: 74%;
 	height: 730px;
-	background: rgb(247,225,116);
-	background: linear-gradient(90deg, rgba(247,225,116,1) 41%, rgba(246,211,43,1) 100%);
 	display: inline-block;
 	vertical-align: top;
 }
 
 #profile-wrapper {
-	height: 680px;
+	margin: 16px 0 0 5px;
+	height: 685px;
 	display: flex;
 	flex-flow: column nowrap;
+	border: 17px outset #3c5aa6;
 }
 
 #profile img {
@@ -238,7 +244,6 @@ hgroup {
 
 table, tr, td {
 	font-size: 16px;
-	/* border: none; */
 }
 
 table {
@@ -253,12 +258,12 @@ table {
 
 /* FOOTER */
 footer {
-	margin-bottom: 0;
+	margin: 0 16px;
 	font-size: smaller;
 }
 
 footer p {
-	margin-bottom: 0;
+	margin: 0 16px;
 	text-align: center;
 }
 
@@ -271,14 +276,3 @@ footer a {
 footer a:hover {
 	color: #ffcb05;
 }
-
-/* pulling hex values 
-pokemon dk blue
-	color: #3c5aa6;
-pokemon yellow shadow
-	color: #c7a008;
-pokemon lt blue
-	color: #2a75bb;
-pokemon yellow
-	color: #ffcb05;
-*/
