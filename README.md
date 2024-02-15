@@ -1,5 +1,7 @@
 # Pok&#233;mon Team Builder
-Ever wanted a place to keep track of your Pok&#233;mon team roster? Search for Pok&#233;mon and add them to your team tracker with the Pok&#233;mon Team Builder. 
+Ever wanted a place to keep track of your Pok&#233;mon team roster? Search for Pok&#233;mon and add them to your team tracker with the Pok&#233;mon Team Builder.
+![Pokemon Team Builder](https://github.com/pwangy/phase-1-project-poke/assets/12631152/327b601d-7929-4629-b98c-bb5cb725bbdb)
+
 
 ## Try it out
 [Pok&#233;mon Team Builder](https://pwangy.github.io/phase-1-project-poke/)
