@@ -210,8 +210,11 @@ const handleClickTeam = (detailUrl) => {
     reset()
     currentPoke = detailUrl //sets specific pokemon's url
     return getSpecificPoke(currentPoke)
-  }
-
+    .then(pokeInfo => {
+        // debugger
+    displayProfile(pokeInfo)
+})
+}
 //! Display pokemon profile
 // Reset and clear profile before loading another
 const reset = () => {
