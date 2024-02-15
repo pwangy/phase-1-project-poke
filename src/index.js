@@ -205,6 +205,7 @@ const updateTeamUI = () => {
         }
     })
 }
+
 // new version of handleClick that works with team container
 const handleClickTeam = (detailUrl) => {
     reset()
@@ -215,6 +216,7 @@ const handleClickTeam = (detailUrl) => {
     displayProfile(pokeInfo)
 })
 }
+
 //! Display pokemon profile
 // Reset and clear profile before loading another
 const reset = () => {
