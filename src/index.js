@@ -289,15 +289,6 @@ const displaySpeciesDetail = (speciesInfo) => {
     profile.append(profileWrapper)
 }
 
-//drag and drop event handlers
-const handleDragStart = e => {
-    const data = {
-        name: e.target.getAttribute('poke-data'), 
-        imageUrl: e.target.getAttribute('img-src')
-    }
-    e.dataTransfer.setData('application/json', JSON.stringify(data)) // package and set both name and URL
-}
-
 const handleDragOver = e => e.preventDefault()
 const handleDragEnter = e => e.preventDefault()
 
