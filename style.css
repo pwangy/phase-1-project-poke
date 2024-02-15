@@ -1,4 +1,27 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
 
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, a, em, img, q, s, samp,
+small, strike, strong, b, u, i, center,
+dl, dt, dd, ol, ul, li, fieldset, form, label, table, tr, th, td, article, footer, header, nav {
+	margin: 16px;
+	padding: 6px;
+	/* border: 1px solid #666; */
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+footer, header, section {
+	display: block;
+}
+body {
+	line-height: 1;
+	background-color: #333;
+	color:antiquewhite;
+}
 ol, ul, li {
 	list-style: none;
 }
@@ -16,15 +39,6 @@ table {
 }
 /* End of Style Reset */
 
-
-* {
-	margin: 16px;
-	padding: 6px;
-	border: 1px solid #666;
-	font: inherit;
-}
-
-
 html, body, header, hgroup, #display-name, #profile span {
 	margin-top: 0;
 	padding-top: 0;
@@ -38,13 +52,7 @@ body {
 	font-style: normal;
 	font-variation-settings: "wdth" 100;
 	line-height: 1.6;
-	color:antiquewhite;
 	background-color: #222;
-	justify-content: center;
-	/* align-items: center; */
-	/* justify-content: center; */
-	/* align-self: center; */
-
 }
 
 header {
@@ -82,19 +90,23 @@ header {
 	background: linear-gradient(180deg, rgba(239,27,36,1) 47%, rgba(169,14,19,1) 49%);
 	border: none;
 	box-shadow: inset 0 0 4px #222c5f;
-} 
-/* ^^ text for div!!  */
+}
 
 #team {
-	width: 1144px;
 	padding: 0;
-	/* display: flex; */
-	/* flex-flow: column nowrap; */
-	/* background-color: darkseagreen; */
-	justify-content: center;
-	align-self: center;
-	border: 1px solid #666;
+	display: flex;
+	flex-flow: column nowrap;
 }
+
+/* #profile {
+	margin: 16px 0 0 8px;
+	width: 74%;
+	background: rgb(247,225,116);
+	background: linear-gradient(90deg, rgba(247,225,116,1) 41%, rgba(246,211,43,1) 100%);
+	display: inline-block;
+	vertical-align: top;
+	border-radius: 3px;
+} */
 
 #team-container {
 	margin: 0;
@@ -103,16 +115,9 @@ header {
 	flex-flow: row wrap;
 	justify-content: center;
 	background-color: #2a75bb;
-	border: 1px solid #333;
 	border-radius: 3px;
-	align-items:center;
-
-	/* border: 8px outset #3c5aa6;; */
+	border: 8px outset #3c5aa6;;
 }
-
-/* background: rgb(247,225,116); */
-/* background: linear-gradient(90deg, rgba(247,225,116,1) 41%, rgba(246,211,43,1) 100%); */
-
 
 .members {
 	padding: 7px;
@@ -121,7 +126,7 @@ header {
 	flex-flow: column nowrap;
 	align-items: center;
 	border-radius: 3px;
-	/* border: none; */
+	border: none;
 }
 
 .members img {
@@ -131,7 +136,7 @@ header {
 	padding: 0;
 	background-color: snow;
 	border-radius: 3px;
-	/* border: none; */
+	border: none;
 }
 
 .members p {
@@ -144,11 +149,10 @@ header {
 	text-transform: uppercase;
 	font-weight: 700;
 	border-radius: 3px;
-	/* border: none; */
+	border: none;
 }
 
 #how-to {
-	/* width: 800px; */
 	background-color: #333;
 	border-radius: 3px;
 	border: 1px solid #444;
@@ -174,7 +178,7 @@ header {
 form {
 	margin: 8px 0 0 0;
 	padding: 0;
-	/* border: none; */
+	border: none;
 	display: flex;
 	flex-flow: row nowrap;
 }
@@ -201,19 +205,17 @@ form {
 	text-transform: capitalize;
 	font-size: small;
 	letter-spacing: 0.05rem;
-	/* border: none; */
+	border: none;
 }
 
 #profile {
-	height: 239px;
 	margin: 16px 0 0 8px;
-	/* width: 74%; */
-	/* background: rgb(247,225,116);
-	background: linear-gradient(90deg, rgba(247,225,116,1) 41%, rgba(246,211,43,1) 100%); */
+	width: 74%;
+	background: rgb(247,225,116);
+	background: linear-gradient(90deg, rgba(247,225,116,1) 41%, rgba(246,211,43,1) 100%);
 	display: inline-block;
 	vertical-align: top;
 	border-radius: 3px;
-	background-color: #2a75bb;
 }
 
 #profile-wrapper {
@@ -221,10 +223,10 @@ form {
 	flex-flow: column nowrap;
 	background-color: #333;
 	border-radius: 3px;
-	/* background-size: 52%; */
-	/* background-repeat: no-repeat; */
-    /* background-origin: border-box; */
-	/* background-position: left 33% top -21%; */
+	background-size: 52%;
+	background-repeat: no-repeat;
+    background-origin: border-box;
+	background-position: left 33% top -21%;
 }
 
 #profile img {
@@ -250,25 +252,25 @@ hgroup {
 	font-size: 36px;
 	font-weight: 700;
 	letter-spacing: 5px;
-	/* border: none; */
+	border: none;
 }
 
 #profile span {
 	width: 15%;
 	margin: 0 0 4px 0;
 	font-size: larger;
-	/* border: none; */
+	border: none;
 }
 
 #profile p {
 	margin: 0 16px 0 16px;
 	font-size: larger;
-	/* border: none; */
+	border: none;
 }
 
 table, tr, td {
 	font-size: 16px;
-	/* border: none; */
+	border: none;
 }
 
 table {
@@ -282,14 +284,13 @@ table {
 footer {
 	margin-bottom: 0;
 	font-size: smaller;
-	/* border: none; */
-	border: 1px solid hotpink;
+	border: none;
 }
 
 footer p {
 	margin-bottom: 0;
 	text-align: center;
-	/* border: none; */
+	border: none;
 }
 
 footer a {
@@ -298,7 +299,7 @@ footer a {
 	text-decoration: none;
 	color:  #30A7D7;
 	cursor: pointer;
-	/* border: none; */
+	border: none;
 }
 
 footer a:hover {
