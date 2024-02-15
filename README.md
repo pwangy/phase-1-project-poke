@@ -3,10 +3,6 @@ Ever wanted a place to keep track of your Pok&#233;mon team roster? Search for P
 
 Pok&#233;mon Team Builder
 
-## What is this?
-Pok&#233;mon Team Builder was built by Steph Bertram, Sung-Jin Ahn, and Peggy Wang for educational purposes as part of Flatiron School's Software Engineering bootcamp.
-
-
 ## Try it out
 [Pok&#233;mon Team Builder](https://pwangy.github.io/phase-1-project-poke/)
 
@@ -36,10 +32,13 @@ Stretch:
 
 ## Credits
 - Steph Bertram [GITHUB](https://github.com/stephbertram)
-- Sung-Jin Ahn [GITHUB] (https://github.com/sahn0307)
+- Sung-Jin Ahn [GITHUB](https://github.com/sahn0307)
 - Peggy Wang [GITHUB](https://github.com/pwangy/)
 - [Meyerweb CSS TOols](http://meyerweb.com/eric/tools/css/reset/)
 - [Poke API](https://pokeapi.co/)
+
+## What is this?
+Pok&#233;mon Team Builder was built by Steph Bertram, Sung-Jin Ahn, and Peggy Wang for educational purposes as part of Flatiron School's Software Engineering bootcamp.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
