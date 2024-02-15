@@ -93,19 +93,57 @@ header {
 }
 
 #team {
+	padding: 0;
 	display: flex;
 	flex-flow: column nowrap;
 	background-color: darkslategray;
 }
 
 #team-container {
+	margin: 0;
+	padding: 0;
 	display: flex;
-	flex-direction: row;
+	flex-flow: row wrap;
+	justify-content: center;
+	background-color: #222;
 	/* background-color: darkolivegreen; */
 }
 
-#team-container div {
-	/* background-color: dimgray; */
+.members {
+	padding: 7px;
+	background-color: #2a75bb;
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	border-radius: 3px;
+	border: none;
+}
+
+.members img {
+	height: 120px;
+	width: 120px;
+	margin: 0;
+	padding: 0;
+	background-color: snow;
+	border-radius: 3px;
+	border: none;
+}
+
+.members p {
+	width: 120px;
+	margin: -3px 0 0 0;
+	padding: 0 0 3px 0;
+	background-color: snow;
+	color: #222;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: 700;
+	border-radius: 3px;
+	border: none;
+}
+
+#how-to {
+	background-color: darkblue;
 }
 
 #selector {
@@ -129,28 +167,17 @@ header {
 	flex-flow: column nowrap;
 	background-color: #333;
 	border-radius: 3px;
-	background-size: 52%;
-	background-repeat: no-repeat;
-    background-origin: border-box;
-	background-position: left 33% top -21%;
 }
 
 #profile img {
 	max-height: 300px;
 	border: none;
-	/* background-size: 45%;
-	background-repeat: no-repeat;
-    background-origin: border-box;
-	background-position: left 32% bottom 95%; */
-    /* background-position-y: center;
-    background-position-x: center; */
 }
 
 hgroup {
 	display: flex;
 	flex-flow: row nowrap;
 	align-items: center;
-	/* background-color: aquamarine; */
 }
 
 #display-name {
@@ -192,7 +219,6 @@ footer {
 	margin-bottom: 0;
 	font-size: smaller;
 	border: none;
-	/* background-color: slateblue; */
 }
 
 footer p {
@@ -224,4 +250,3 @@ pokemon lt blue
 pokemon yellow
 	color: #ffcb05;
 */
-
