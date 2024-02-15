@@ -1,4 +1,4 @@
-// ! Declare Globals
+// <!---- DECLARE GLOBALS ---->
 const pokeAPI = 'https://pokeapi.co/api/v2/'
 const h1 = document.querySelector('h1')
 const selector = document.querySelector('#selector')
@@ -33,8 +33,8 @@ let specificPokeInfo = []
 const teamArray = [null, null, null, null, null, null]
 let currentPoke = ''
 
-// ! Fetch Data
-const getPokemon = () => {
+// <!---- FETCH DATA ---->
+const fetchPokemon = () => {
     return fetch(`${pokeAPI}pokemon/?limit=151`)
         .then(res => {
             if (res.ok) {
@@ -49,7 +49,7 @@ const getPokemon = () => {
         .catch(err => console.error(err))
 }
 
-const getSpecificPoke = (currentPoke) => {
+const fetchSpecificPoke = (currentPoke) => {
     return fetch(currentPoke)
     .then(res => {
         if (res.ok) {
@@ -64,7 +64,7 @@ const getSpecificPoke = (currentPoke) => {
     .catch(err => console.error(err))
 }
 
-const getSpecies = (species) => {
+const fetchSpecies = (species) => {
     return fetch(species)
         .then(res => {
             if (res.ok) {
@@ -102,13 +102,13 @@ const displayAllPokemon = (pokeListObj) => {
   }
 
 // <!---- FILTER FUNCTIONALITY ---->
-// 1. Filter Event Listener
+// Filter Event Listener
 filter.addEventListener('change', e => {
     // need e.preventDefault()?
     handleFilterChange(e.target.value)
 })
 
-// 2. Filter Click Handler
+// Filter Click Handler
 const handleFilterChange = (filterName) => {
     resultsList.innerHTML = ''
     if (filterName === 'azByName') {
@@ -122,8 +122,6 @@ const handleFilterChange = (filterName) => {
 const filterByAZ = () => {
     sortedList = [...allPokeArray]
     sortedList.sort((a, b) => {
-      //localeCompare() method returns a negative value if a should be sorted before b, 
-      //a positive value if a should be sorted after b, and 0 if they are equal
       return a.name.localeCompare(b.name)  
     })
     renderFilteredNames(sortedList)
@@ -138,7 +136,7 @@ const filterByZA = () => {
     renderFilteredNames(sortedList)
 }
 
-// 4. Filter Display Function --> Same as function below used for Search
+// Filter Display Function
 const renderFilteredNames = (sortedList) => {
     sortedList.forEach(pokemon => {
         displayAllPokemon(pokemon)
@@ -146,13 +144,13 @@ const renderFilteredNames = (sortedList) => {
 }
 
 // <!---- SEARCH FUNCTIONALITY ---->
-// 1. Search Event Listener
+// Search Event Listener
 searchFormSubmit.addEventListener('submit', e => {
     e.preventDefault()
     searchByName(e.target.search.value)
 })
 
-// 2. Search Input Function
+// Search Input Function
 const searchByName = (searchName) => {
     resultsList.innerHTML = ''
     allPokeArray.forEach(pokemon => {
@@ -169,9 +167,8 @@ const handleClick = (e) => {
     // console.log(details)
     reset()
     currentPoke = e.target.id //sets specific pokemon's url
-    return getSpecificPoke(currentPoke)
+    return fetchSpecificPoke(currentPoke)
         .then(pokeInfo => {
-            // debugger
         displayProfile(pokeInfo)
     })
 }
@@ -205,17 +202,18 @@ const updateTeamUI = () => {
         }
     })
 }
+
 // new version of handleClick that works with team container
 const handleClickTeam = (detailUrl) => {
     reset()
     currentPoke = detailUrl //sets specific pokemon's url
-    return getSpecificPoke(currentPoke)
+    return fetchSpecificPoke(currentPoke)
     .then(pokeInfo => {
-        // debugger
     displayProfile(pokeInfo)
 })
 }
-//! Display pokemon profile
+
+// <!---- DISPLAY POKEMON PROFILE ---->
 // Reset and clear profile before loading another
 const reset = () => {
     profileWrapper.remove()
@@ -278,7 +276,7 @@ const displayProfile = (pokeInfo) => {
     // fetch flavor text and growth info from Species endpoint
     let species = ''
     species = pokeInfo.species.url
-    return getSpecies(species)
+    return fetchSpecies(species)
 }
 
 // use data from species-specific endpoint and append everything to display profile
@@ -328,9 +326,9 @@ const handleDrop = e => {
         alert('Invalid slot')
 }}
 
-// ! Start app logic on load
+// <!---- START APP LOGIC ON LOAD ---->
 const startTeamBuilder = () => {
-    getPokemon()
+    fetchPokemon()
     setupDragDrop()
 }
 
