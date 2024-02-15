@@ -1,56 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pok&#233;mon Team Builder</title>
-    <link rel="icon" href="./assets/favico.png" type="image/ico">
-    <link rel="stylesheet" href="style.css">
-    <script defer type="text/javascript" src="src/index.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-</head>
-<header>
-   <img src="./assets/pokemon-logo.svg" id="poke-logo">
-   <div id="title-wrapper">
-    <h1 id="team-builder">TEAM BUILDER</h1>
-   </div> 
-</header>
-<body>
-    <section id="team">
-        <div id="team-container">
-            <div class="members" data-index="0">1</div>
-            <div class="members" data-index="1">2</div>
-            <div class="members" data-index="2">3</div>
-            <div class="members" data-index="3">4</div>
-            <div class="members" data-index="4">5</div>
-            <div class="members" data-index="5">6</div>
-        </div>
-    </section>
-    <section id="how-to">
-        <h3>Embark on an adventure through our first-generation Pok&#233;mon database! Delve into each Pok&#233;mon's traits and forge a formidable team of six for epic battles. Drag and drop your Pok&#233;mon to the top of the page to get started.</h3>
-    </section> 
-    <section id="selector">
-        <div id="filter-search">
-            <select name="filter" id="filter">
-                <option value="default">Filter</option>
-                <option value="azByName">A-Z by Name</option>
-                <option value="zaByName">Z-A by Name</option>
-            </select>
-            <form>
-                <input type="search" id="search" name="search" placeholder="e.g. Pikachu">
-                <input type="submit" id="submitSearch" value="SEARCH">
-            </form>
-        </div>
-            <ul id="pokemon-list"></ul>
-    </section>
-    <section id="profile"></section>
-    <footer>
-        <p>Pok&#233;mon Team Builder was built by 
-            <a href="https://github.com/stephbertram" rel="noreferrer noopener" target="_blank">Steph Bertram</a>, 
-            <a href="https://github.com/sahn0307" rel="noreferrer noopener" target="_blank">Sung-Jin Ahn</a>, and 
-            <a href="https://github.com/pwangy/" rel="noreferrer noopener" target="_blank">Peggy Wang</a> for educational purposes as part of <a href="https://flatironschool.com/" rel="noreferrer noopener" target="_blank">Flatiron School</a>'s Software Engineering bootcamp.</p>
-    </footer>
-</body>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Pok&#233;mon Team Builder</title>
+		<link rel="icon" href="./assets/favico.png" type="image/ico">
+		<link rel="stylesheet" href="style.css">
+		<script defer type="text/javascript" src="src/index.js"></script>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+			rel="stylesheet" />
+	</head>
+	<header>
+		<img src="./assets/pokemon-logo.svg" id="poke-logo">
+		<div id="title-wrapper">
+			<h1 id="team-builder">TEAM BUILDER</h1>
+		</div>
+	</header>
+	<body>
+		<section id="team">
+			<div id="team-container">
+				<div class="members" data-index="0">1</div>
+				<div class="members" data-index="1">2</div>
+				<div class="members" data-index="2">3</div>
+				<div class="members" data-index="3">4</div>
+				<div class="members" data-index="4">5</div>
+				<div class="members" data-index="5">6</div>
+			</div>
+		</section>
+		<section id="how-to">
+			<p>
+				Search, filter, and scroll your way through our Pok&#233;mon database featuring all 151 original Pok&#233;mon from the Kanto region! &nbsp;Click a Pok&#233;mon from the list to delve into its traits. Drag and drop Pok&#233;mon to the top of the page to forge your dream team of 1st Generation Pok&#233;mon!
+			</p>
+		</section>
+		<section id="selector">
+			<div id="filter-search">
+				<select name="filter" id="filter">
+					<option value="default">Filter</option>
+					<option value="azByName">A-Z by Name</option>
+					<option value="zaByName">Z-A by Name</option>
+				</select>
+				<form>
+					<input
+						type="search"
+						id="search"
+						name="search"
+						placeholder="e.g. Pikachu" />
+					<input type="submit" id="submitSearch" value="SEARCH" />
+				</form>
+			</div>
+			<ul id="pokemon-list"></ul>
+		</section>
+		<section id="profile"></section>
+		<footer>
+			<p>Pok&#233;mon Team Builder was built by
+				<a href="https://github.com/stephbertram" rel="noreferrer noopener" target="_blank">Steph Bertram</a>,
+				<a href="https://github.com/sahn0307" rel="noreferrer noopener" target="_blank">Sung-Jin Ahn</a>, and
+				<a href="https://github.com/pwangy/" rel="noreferrer noopener" target="_blank">Peggy Wang</a> for educational purposes as part of
+				<a href="https://flatironschool.com/" rel="noreferrer noopener" target="_blank">Flatiron School</a>'s Software Engineering bootcamp.
+            </p>
+		</footer>
+	</body>
 </html>
