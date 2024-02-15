@@ -79,16 +79,27 @@ const getSpecies = (species) => {
 }
 
 // Populates initial list of pokemon, filter and search results get sent here
-const displayAllPokemon = (eachPoke) => {
-    const li = document.createElement('li')
-    li.innerText = eachPoke.name
-    li.id = eachPoke.url
-    li.addEventListener('click', e => handleClick(e))
-    li.setAttribute('draggable', true)
-    li.setAttribute('poke-data', eachPoke.name)
-    li.addEventListener('dragstart', handleDragStart)
-    resultsList.appendChild(li)
-}
+const displayAllPokemon = (pokeListObj) => {
+    fetch(pokeListObj.url) // Fetch the detailed Pokémon data
+      .then(response => {
+        if (!response.ok) throw new Error('Failed to fetch Pokémon details')
+        return response.json()
+      })
+      .then(details => {
+        const li = document.createElement('li')
+        li.innerText = details.name
+        li.id = pokeListObj.url
+        resultsList.appendChild(li)
+        li.addEventListener('click', e => handleClick(e, details))
+        li.setAttribute('draggable', true)
+        li.setAttribute('poke-data', details.name) // set name for drag-and-drop
+        li.setAttribute('img-src', details.sprites.front_default) // set img-src for drag and drop
+        li.setAttribute('detail-url', pokeListObj.url) //store id for drag and drop
+        li.addEventListener('dragstart', handleDragStart)
+        
+      })
+      .catch(error => console.error('Error fetching Pokémon details:', error))
+  }
 
 // <!---- FILTER FUNCTIONALITY ---->
 // 1. Filter Event Listener
