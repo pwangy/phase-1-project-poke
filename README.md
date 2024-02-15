@@ -38,7 +38,7 @@ Stretch:
 - [ ] Edit your team
 - [ ] Additional arrays of teams (a, b, wishlist, bench, etc)
 - [ ] Cookies/ local storage to persist team for individual users
-- [x] additional/ more complex filtering capabilities
+- [x] Additional/More complex filtering capabilities
 
 
 ## License

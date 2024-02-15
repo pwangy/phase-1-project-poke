@@ -98,16 +98,6 @@ header {
 	flex-flow: column nowrap;
 }
 
-/* #profile {
-	margin: 16px 0 0 8px;
-	width: 74%;
-	background: rgb(247,225,116);
-	background: linear-gradient(90deg, rgba(247,225,116,1) 41%, rgba(246,211,43,1) 100%);
-	display: inline-block;
-	vertical-align: top;
-	border-radius: 3px;
-} */
-
 #team-container {
 	margin: 0;
 	padding: 0;
@@ -223,21 +213,11 @@ form {
 	flex-flow: column nowrap;
 	background-color: #333;
 	border-radius: 3px;
-	background-size: 52%;
-	background-repeat: no-repeat;
-    background-origin: border-box;
-	background-position: left 33% top -21%;
 }
 
 #profile img {
 	max-height: 300px;
 	border: none;
-	/* background-size: 45%;
-	background-repeat: no-repeat;
-    background-origin: border-box;
-	background-position: left 32% bottom 95%; */
-    /* background-position-y: center;
-    background-position-x: center; */
 }
 
 hgroup {
@@ -316,4 +296,3 @@ pokemon lt blue
 pokemon yellow
 	color: #ffcb05;
 */
-
