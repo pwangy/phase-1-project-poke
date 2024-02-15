@@ -1,6 +1,7 @@
 # Pok&#233;mon Team Builder
-Ever wanted a place to keep track of your Pok&#233;mon team roster? Search for Pok&#233;mon and add them to your team tracker with the PTB. 
+Ever wanted a place to keep track of your Pok&#233;mon team roster? Search for Pok&#233;mon and add them to your team tracker with the Pok&#233;mon Team Builder. 
 
+Pok&#233;mon Team Builder
 
 ## What is this?
 Pok&#233;mon Team Builder was built by Steph Bertram, Sung-Jin Ahn, and Peggy Wang for educational purposes as part of Flatiron School's Software Engineering bootcamp.
@@ -9,6 +10,7 @@ Pok&#233;mon Team Builder was built by Steph Bertram, Sung-Jin Ahn, and Peggy Wa
 ## Try it out
 [Pok&#233;mon Team Builder](https://pwangy.github.io/phase-1-project-poke/)
 
+Search, filter, and scroll your way through our Pokemon database featuring all 151 original Pokemon from the Kanto region! Click a Pokemon from the list to delve into its traits. Drag and Drop Pokemon to the top of the page to forge your dream team of 1st Generation Pokemon!
 
 ## Deliverables
 - [x] Your app must be a HTML/CSS/JS frontend that accesses data from a public API or from a db.json file using json-server.
@@ -32,6 +34,12 @@ Stretch:
 - [ ] Additional arrays of teams (a, b, wishlist, bench, etc)
 - [ ] Cookies/ local storage to persist team for individual users
 
+## Credits
+- Steph Bertram [GITHUB](https://github.com/stephbertram)
+- Sung-Jin Ahn [GITHUB] (https://github.com/sahn0307)
+- Peggy Wang [GITHUB](https://github.com/pwangy/)
+- [Meyerweb CSS TOols](http://meyerweb.com/eric/tools/css/reset/)
+- [Poke API](https://pokeapi.co/)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
