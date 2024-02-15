@@ -100,15 +100,14 @@ filter.addEventListener('change', e => {
 // 2. Filter Click Handler
 const handleFilterChange = (filterName) => {
     resultsList.innerHTML = ''
-    if (filterName === "azByName") {
-        getPokemons().then((allPokeList) => {filterByAZ(allPokeList)})
+    if (filterName === 'alphabeticalByName') {
+        filterByAZ(allPokeArray)
     }
     if (filterName === "zaByName") {
-        getPokemons().then((allPokeList) => {filterByZA(allPokeList)})
-    }
-}
+        filterByZA(allPokeList)
+}}
 
-// 3. Filter Array of Pokemon Alphabetically
+// Apply filter: A to B
 const filterByAZ = () => {
     sortedList = [...allPokeArray]
     sortedList.sort((a, b) => {
@@ -119,12 +118,10 @@ const filterByAZ = () => {
     renderFilteredNames(sortedList)
 }
 
-// 3. Filter Array of Pokemon Z to A
+// Apply filter: Z to A
 const filterByZA = (allPokeList) => {
     const sortedList = [...allPokeList]
     sortedList.sort((a, b) => {
-      //localeCompare() method returns a negative value if a should be sorted before b, 
-      //a positive value if a should be sorted after b, and 0 if they are equal   
       return b.name.localeCompare(a.name)  
     })
     renderFilteredNames(sortedList)
@@ -291,6 +288,30 @@ const displaySpeciesDetail = (speciesInfo) => {
     profileWrapper.append(img, profileHeader, flavorText, stats)
     profile.append(profileWrapper)
 }
+
+//drag and drop event handlers
+const handleDragStart = e => {
+    const data = {
+        name: e.target.getAttribute('poke-data'), 
+        imageUrl: e.target.getAttribute('img-src')
+    }
+    e.dataTransfer.setData('application/json', JSON.stringify(data)) // package and set both name and URL
+}
+
+const handleDragOver = e => e.preventDefault()
+const handleDragEnter = e => e.preventDefault()
+
+const handleDrop = e => {
+    e.preventDefault()
+    const { name, imageUrl } = JSON.parse(e.dataTransfer.getData('application/json'))
+    const slotIndex = parseInt(e.target.getAttribute('data-index'), 10)
+
+    if (slotIndex >= 0 && slotIndex < teamArray.length) {
+        teamArray[slotIndex] = { name, imageUrl } // store both name and image URL
+        updateTeamUI() // invoke to update UI with name/images
+    } {
+        console.error("Invalid slot")
+}}
 
 //drag and drop event handlers
 const handleDragStart = e => {
