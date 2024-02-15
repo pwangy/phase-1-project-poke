@@ -100,11 +100,11 @@ filter.addEventListener('change', e => {
 // 2. Filter Click Handler
 const handleFilterChange = (filterName) => {
     resultsList.innerHTML = ''
-    if (filterName === 'alphabeticalByName') {
+    if (filterName === 'azByName') {
         filterByAZ(allPokeArray)
     }
-    if (filterName === "zaByName") {
-        filterByZA(allPokeList)
+    if (filterName === 'zaByName') {
+        filterByZA(allPokeArray)
 }}
 
 // Apply filter: A to B
@@ -119,8 +119,8 @@ const filterByAZ = () => {
 }
 
 // Apply filter: Z to A
-const filterByZA = (allPokeList) => {
-    const sortedList = [...allPokeList]
+const filterByZA = () => {
+    const sortedList = [...allPokeArray]
     sortedList.sort((a, b) => {
       return b.name.localeCompare(a.name)  
     })
@@ -288,21 +288,6 @@ const displaySpeciesDetail = (speciesInfo) => {
     profileWrapper.append(img, profileHeader, flavorText, stats)
     profile.append(profileWrapper)
 }
-
-const handleDragOver = e => e.preventDefault()
-const handleDragEnter = e => e.preventDefault()
-
-const handleDrop = e => {
-    e.preventDefault()
-    const { name, imageUrl } = JSON.parse(e.dataTransfer.getData('application/json'))
-    const slotIndex = parseInt(e.target.getAttribute('data-index'), 10)
-
-    if (slotIndex >= 0 && slotIndex < teamArray.length) {
-        teamArray[slotIndex] = { name, imageUrl } // store both name and image URL
-        updateTeamUI() // invoke to update UI with name/images
-    } {
-        console.error("Invalid slot")
-}}
 
 //drag and drop event handlers
 const handleDragStart = e => {
