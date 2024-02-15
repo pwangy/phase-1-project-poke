@@ -1,9 +1,9 @@
-// <!---- DECLARE GLOBALS ---->
+// Declare Globals
 const pokeAPI = 'https://pokeapi.co/api/v2/'
 const h1 = document.querySelector('h1')
 const selector = document.querySelector('#selector')
 const resultsList = document.querySelector('#pokemon-list')
-const searchFormSubmit = document.querySelector("form")
+const searchFormSubmit = document.querySelector('form')
 const filter = document.querySelector('#filter')
 const profile = document.querySelector('#profile')
 const profileWrapper = document.createElement('article')
@@ -33,7 +33,7 @@ let specificPokeInfo = []
 const teamArray = [null, null, null, null, null, null]
 let currentPoke = ''
 
-// <!---- FETCH DATA ---->
+// Fetch Data
 const fetchPokemon = () => {
     return fetch(`${pokeAPI}pokemon/?limit=151`)
         .then(res => {
@@ -51,17 +51,17 @@ const fetchPokemon = () => {
 
 const fetchSpecificPoke = (currentPoke) => {
     return fetch(currentPoke)
-    .then(res => {
-        if (res.ok) {
-            return res.json()
-        }
-        throw res.statusText
-    })
-    .then(pokeInfo => {
-        specificPokeInfo = pokeInfo
-        return pokeInfo
-    })
-    .catch(err => console.error(err))
+        .then(res => {
+            if (res.ok) {
+                return res.json()
+            }
+            throw res.statusText
+        })
+        .then(pokeInfo => {
+            specificPokeInfo = pokeInfo
+            return pokeInfo
+        })
+        .catch(err => console.error(err))
 }
 
 const fetchSpecies = (species) => {
@@ -78,33 +78,31 @@ const fetchSpecies = (species) => {
         .catch(err => console.error(err))
 }
 
-// Populates initial list of pokemon, filter and search results get sent here
+// Populates Initial List of Pokemon, Filter and Search Results Get Sent Here
 const displayAllPokemon = (pokeListObj) => {
-    fetch(pokeListObj.url) // Fetch the detailed Pokémon data
-      .then(response => {
-        if (!response.ok) throw new Error('Failed to fetch Pokémon details')
-        return response.json()
-      })
-      .then(details => {
-        const li = document.createElement('li')
-        li.innerText = details.name
-        li.id = pokeListObj.url
-        resultsList.appendChild(li)
-        li.addEventListener('click', e => handleClick(e, details))
-        li.setAttribute('draggable', true)
-        li.setAttribute('poke-data', details.name) // set name for drag-and-drop
-        li.setAttribute('img-src', details.sprites.front_default) // set img-src for drag and drop
-        li.setAttribute('detail-url', pokeListObj.url) //store id for drag and drop
-        li.addEventListener('dragstart', handleDragStart)
+    fetch(pokeListObj.url) // fetch the detailed Pokémon data
+        .then(response => {
+            if (!response.ok) throw new Error('Failed to fetch Pokémon details')
+            return response.json()
+        })
+        .then(details => {
+            const li = document.createElement('li')
+            li.innerText = details.name
+            li.id = pokeListObj.url
+            resultsList.appendChild(li)
+            li.addEventListener('click', e => handleClick(e, details))
+            li.setAttribute('draggable', true)
+            li.setAttribute('poke-data', details.name) // set name for drag-and-drop
+            li.setAttribute('img-src', details.sprites.front_default) // set img-src for drag and drop
+            li.setAttribute('detail-url', pokeListObj.url) //store id for drag and drop
+            li.addEventListener('dragstart', handleDragStart)
         
-      })
-      .catch(error => console.error('Error fetching Pokémon details:', error))
+        })
+        .catch(error => console.error('Error fetching Pokémon details:', error))
   }
 
-// <!---- FILTER FUNCTIONALITY ---->
 // Filter Event Listener
 filter.addEventListener('change', e => {
-    // need e.preventDefault()?
     handleFilterChange(e.target.value)
 })
 
@@ -118,7 +116,7 @@ const handleFilterChange = (filterName) => {
         filterByZA(allPokeArray)
 }}
 
-// Apply filter: A to B
+// Apply Filter: A to B
 const filterByAZ = () => {
     sortedList = [...allPokeArray]
     sortedList.sort((a, b) => {
@@ -127,7 +125,7 @@ const filterByAZ = () => {
     renderFilteredNames(sortedList)
 }
 
-// Apply filter: Z to A
+// Apply Filter: Z to A
 const filterByZA = () => {
     const sortedList = [...allPokeArray]
     sortedList.sort((a, b) => {
@@ -142,8 +140,6 @@ const renderFilteredNames = (sortedList) => {
         displayAllPokemon(pokemon)
     })
 }
-
-// <!---- SEARCH FUNCTIONALITY ---->
 // Search Event Listener
 searchFormSubmit.addEventListener('submit', e => {
     e.preventDefault()
@@ -162,9 +158,8 @@ const searchByName = (searchName) => {
     })
 }
 
-// <!---- EVENT HANDLERS ---->
+// Handle Click on Pokemon Name in Selector
 const handleClick = (e) => {
-    // console.log(details)
     reset()
     currentPoke = e.target.id //sets specific pokemon's url
     return fetchSpecificPoke(currentPoke)
@@ -173,7 +168,7 @@ const handleClick = (e) => {
     })
 }
 
-// Drag and Drop stuff
+// Drag and Drop Setup
 const setupDragDrop = () => {
     document.querySelectorAll('.members').forEach(member => {
         member.addEventListener('dragover', handleDragOver)
@@ -185,7 +180,7 @@ const setupDragDrop = () => {
 // Update Container
 const updateTeamUI = () => {
     document.querySelectorAll('.members').forEach((member, index) => {
-        const pokemon = teamArray[index];
+        const pokemon = teamArray[index]
         member.innerHTML = '' // clear slot
         if (pokemon) {
             const imgElement = document.createElement('img')
@@ -203,7 +198,7 @@ const updateTeamUI = () => {
     })
 }
 
-// new version of handleClick that works with team container
+// Handle Click on Team 
 const handleClickTeam = (detailUrl) => {
     reset()
     currentPoke = detailUrl //sets specific pokemon's url
@@ -213,8 +208,7 @@ const handleClickTeam = (detailUrl) => {
 })
 }
 
-// <!---- DISPLAY POKEMON PROFILE ---->
-// Reset and clear profile before loading another
+// Reset and Clear Profile Before Loading Another
 const reset = () => {
     profileWrapper.remove()
     img.remove()
@@ -230,7 +224,7 @@ const reset = () => {
     abilityArray = []
 }
 
-// Use data from second fetch call for specific poke data
+// Use Data From Second Fetch Call for Specific Poke Data
 const displayProfile = (pokeInfo) => {
     profileWrapper.id = 'profile-wrapper'
     profileWrapper.setAttribute('poke-data', pokeInfo.name)
@@ -239,7 +233,7 @@ const displayProfile = (pokeInfo) => {
     profileWrapper.setAttribute('draggable', true)
     profileWrapper.addEventListener('dragstart', handleDragStart)
 
-    // set image, name, pokedex number
+    // Set Image, Name, Pokedex number
     img.src = pokeInfo.sprites.other.dream_world.front_default
     img.setAttribute('draggable', false)
     const setName = pokeInfo.name
@@ -249,73 +243,72 @@ const displayProfile = (pokeInfo) => {
     name.id = 'display-name'
     id.innerText = `#${pokeInfo.id}`
 
-    // list abilities
+    // List Abilities
     abilityLabel.innerText = 'Abilities:'
     abilityLabel.className = 'column'
-    const abilityObj = pokeInfo.abilities
+    const abilityInfo = pokeInfo.abilities
     const abilityArray = []
-    const abilityCount = abilityObj.length
+    const abilityCount = abilityInfo.length
     for (let i = 0; i < abilityCount; i++ ) {
-        abilityArray.push(abilityObj[i].ability.name)
+        abilityArray.push(abilityInfo[i].ability.name)
     }
     abilityValue.innerText = abilityArray.join(', ')
     abilityRow.append(abilityLabel, abilityValue)
 
-    // set height
+    // Set Height
     heightLabel.innerText = 'Height:'
     heightLabel.className = 'column'
     heightValue.innerText = pokeInfo.height
     heightRow.append(heightLabel, heightValue)
    
-    // set weight
+    // Set Weight
     weightLabel.innerText = 'Weight:'
     weightLabel.className = 'column'
     weightValue.innerText = pokeInfo.weight
     weightRow.append(weightLabel, weightValue)
   
-    // fetch flavor text and growth info from Species endpoint
+    // Fetch Flavor Text and Growth Info from Species Endpoint
     let species = ''
     species = pokeInfo.species.url
     return fetchSpecies(species)
 }
 
-// use data from species-specific endpoint and append everything to display profile
+// Use Data From Species-Specific Endpoint and Append Everything to Display Profile
 const displaySpeciesDetail = (speciesInfo) => {
-    // get flavor text, remove line breaks, set text
+    // Get Flavor Text, Remove Line Breaks, Set Text
     flavor = speciesInfo.flavor_text_entries[1].flavor_text
     const removeLineBreaks = flavor.split('\n')
     const flavorClean = removeLineBreaks.join(' ')
     flavorText.innerText = flavorClean
     flavorText.id = 'flavor-text'
 
-    // set growth rate
+    // Set Growth Rate
     growthLabel.innerText = 'Growth Rate:'
     growthLabel.className = 'column'
     growthValue.innerText = speciesInfo.growth_rate.name
     growthRow.append(growthLabel, growthValue)
 
-    // nest and show
+    // Nest and Show
     stats.append(abilityRow, heightRow, weightRow, growthRow)
     profileHeader.append(name, id)
     profileWrapper.append(img, profileHeader, flavorText, stats)
     profile.append(profileWrapper)
 }
-
-//drag and drop event handlers
+//Drag and Drop Event Handlers
 const handleDragStart = e => {
-    const data = {
+    const dragData = {
         name: e.target.getAttribute('poke-data'), 
         imageUrl: e.target.getAttribute('img-src'),
         detailUrl: e.target.getAttribute('detail-url'),
     }
-    e.dataTransfer.setData('application/json', JSON.stringify(data)) // package and set name, imageUrl, detailUrl
+    e.dataTransfer.setData('application/json', JSON.stringify(dragData)) // package and set name, imageUrl, detailUrl
 }
 
 const handleDragOver = e => e.preventDefault()
 const handleDragEnter = e => e.preventDefault()
 
 const handleDrop = e => {
-    e.preventDefault();
+    e.preventDefault()
     const { name, imageUrl, detailUrl } = JSON.parse(e.dataTransfer.getData('application/json'));
     const slotIndex = parseInt(e.target.getAttribute('data-index'), 10); // identify team slot
 
@@ -326,7 +319,7 @@ const handleDrop = e => {
         alert('Invalid slot')
 }}
 
-// <!---- START APP LOGIC ON LOAD ---->
+// Start App Logic On Load
 const startTeamBuilder = () => {
     fetchPokemon()
     setupDragDrop()
