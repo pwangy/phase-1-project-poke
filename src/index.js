@@ -118,31 +118,20 @@ const handleFilterChange = (filterName) => {
 
 // Apply Filter: A to B
 const filterByAZ = () => {
-    const lowercaseList = allPokeArray.map(poke => poke.name.toLowerCase())
-    lowercaseList.sort((a, b) => {
-    if (a.name < b.name) {
-        return -1
-    }
-    if (a.name > b.name)
-        return 1
-    return 0;
+    sortedList = [...allPokeArray]
+    sortedList.sort((a, b) => {
+      return a.name.localeCompare(b.name)  
     })
-    renderFilteredNames(lowercaseList)
-    }
-
+    renderFilteredNames(sortedList)
+}
 
 // Apply Filter: Z to A
 const filterByZA = () => {
-    const lowercaseList = allPokeArray.map(poke => poke.name.toLowerCase())
-    lowercaseList.sort((a, b) => {
-    if (a.name < b.name) {
-        return -1
-    }
-    if (a.name > b.name)
-        return 1
-    return 0;
-})
-    renderFilteredNames(lowercaseList)
+    const sortedList = [...allPokeArray]
+    sortedList.sort((a, b) => {
+      return b.name.localeCompare(a.name)  
+    })
+    renderFilteredNames(sortedList)
 }
 
 // Filter Display Function
